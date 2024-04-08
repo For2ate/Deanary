@@ -1,0 +1,85 @@
+--Получение данных о сотрудниках, отсортированное по уровню доступа
+select st.staff_id as "ID сотрудника", st.first_name || ' ' || st.last_name as "ФИ сотрудника",
+	st.department as "Кафедра", st.access_level as "Уровень доступа", phone.contact as "Номер"
+	from
+		staff st left join contactphones phone
+			on st.staff_id = phone.staff_id
+	order by 
+		"Уровень доступа" desc, "ID сотрудника" desc;
+
+--Получение данных об оборудовании
+select equ.equipment_id as "ID оборудования", equ.commissioning_date as "Дата ввода в эксплуотацию", eql.manufactor as "Производитель", 
+	eql.model as "Модель", equipment_type as "Тип оборудования", eql.access_level as "Уровень доступа"
+	from equipment equ
+		left join models eql
+		on eql.model_id = equ.model_id
+	order by 
+		access_level desc;
+
+
+--Получение данных о запросах
+select * 
+	from requests req  join staff st
+		on req.staff_id = st.staff_id
+	 join equipment eq
+		on req.equipment_id = eq.equipment_id
+	order by st.staff_id, eq.equipment_id;
+		
+
+--Полное получение данных о запросе вместе с сотрудником и оборудованием
+select 
+		st.staff_id as "ID сотрудника", st.first_name || ' ' || st.last_name as "ФИ сотрудника",
+		st.department as "Кафедра", st.access_level as "Уровень доступа", st.contact as "Номер", 
+		equ."ID оборудования", equ."Дата ввода в эксплуотацию", equ."Производитель", 
+		equ."Модель", equ."Тип оборудования", equ."Уровень доступа оборудования", 
+		req.start_date as "Дата выдачи", req.return_date as "Дата возврата"
+	from requests req
+		join
+--Получение данных о сотрудниках
+(	--Получение данных о сотрудниках, отсортированное по уровню доступа
+	select st.staff_id, st.first_name, st.last_name,
+		st.department, st.access_level, phone.contact
+	from
+		staff st left join contactphones phone
+			on st.staff_id = phone.staff_id
+) as st
+		on st.staff_id = req.staff_id
+	join 
+	--Получение данных об оборудовании
+(--Получение данных об оборудовании
+	select equ.equipment_id as "ID оборудования", equ.commissioning_date as "Дата ввода в эксплуотацию", eql.manufactor as "Производитель", 
+		eql.model as "Модель", equipment_type as "Тип оборудования", eql.access_level as "Уровень доступа оборудования"
+		from equipment equ
+			left join models eql
+		on eql.model_id = equ.model_id
+) as equ
+		on equ."ID оборудования" = req.equipment_id
+	order by "Уровень доступа" desc;
+
+
+
+--Получение данных об количестве оборудования конкретной модели
+select  eql.manufactor, eql.model, count(*)
+	from equipment equ
+		left join models eql
+		on eql.model_id = equ.model_id
+	group by eql.model, eql.manufactor
+	order by count desc;
+
+--Выбор моделей кол-во которых больше 1
+select  eql.manufactor, eql.model, count(*) as count
+	from equipment equ
+		left join models eql
+		on eql.model_id = equ.model_id
+	group by eql.model, eql.manufactor
+	having count(*) > 1
+	order by count;
+
+select * from fullrequestinformation frf
+	where "Уровень доступа" >= 4;
+
+select * from fullrequestinformation frf
+	where frf."Уровень доступа" = (select min("Уровень доступа") from fullrequestinformation)
+
+
+	

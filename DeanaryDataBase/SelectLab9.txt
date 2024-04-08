@@ -1,0 +1,19 @@
+-----------
+select * from fullrequestinformation frf
+	where frf."Уровень доступа" = (select min("Уровень доступа") from fullrequestinformation)
+	
+	union 
+	
+select * from fullrequestinformation frf
+	where frf."Уровень доступа" = (select max("Уровень доступа") from fullrequestinformation)
+-------------
+
+-- обьединение само в себя
+select * from fullrequestinformation frf_first, fullrequestinformation frf_second
+	where frf_first."Уровень доступа" >= frf_second."Уровень доступа оборудования"
+------------
+
+select * from 
+	staff st full outer join contactphone cp
+		on st.staffid =  cp.staffid
+---------------

@@ -1,0 +1,64 @@
+create table Staff
+(
+	Staff_ID 		SERIAL 		PRIMARY KEY,
+	First_Name 		VARCHAR(30) NOT NULL,
+   	Last_Name 		VARCHAR(30) NOT NULL,
+    Department 		VARCHAR(40) NOT NULL,
+	Access_Level 	SMALLINT 	NOT NULL,
+	Description 	TEXT
+	check (Access_Level >= 0 and Access_Level <= 10)
+);
+
+CREATE TABLE ContactPhones
+(
+	Contact 	INT		NOT NULL,
+	Staff_ID 	INT	 	NOT NULL,
+	FOREIGN KEY (Staff_ID) REFERENCES Staff(Staff_ID) on delete cascade,
+	PRIMARY KEY(Contact, Staff_ID)
+);
+
+create table Models
+(
+	Model_ID 		SERIAL	 	PRIMARY KEY,
+	Manufactor 		VARCHAR(30) NOT NULL,
+	Model 			VARCHAR(30) NOT NULL,
+    Equipment_Type 	VARCHAR(20) NOT NULL,
+	Access_Level 	SMALLINT,
+	check (Access_Level >= 0 and Access_Level <= 10)
+);
+
+create table Equipment
+(
+	Equipment_ID 		SERIAL PRIMARY KEY,
+	Model_ID 			INT NOT NULL,
+	DeadLine_Period 	DATE NOT NULL,
+	Commissioning_Date 	DATE NOT NULL,
+	Description 		TEXT,
+	FOREIGN KEY (Model_ID) REFERENCES Models(Model_ID) on delete cascade
+);
+CREATE TABLE Statuses
+(
+	Type_ID 		SERIAL PRIMARY KEY,
+	Status_Type 	VARCHAR(20) NOT NULL
+);
+
+CREATE TABLE Status
+(
+	Equipment_ID 		INT 		NOT NULL,
+	Type_ID 			INT		 	NOT NULL,
+	Date_of_assignment 	DATE 		NOT NULL,
+	FOREIGN KEY (Equipment_ID) REFERENCES Equipment(Equipment_ID) on delete cascade,
+	FOREIGN KEY (Type_ID) REFERENCES Statuses(Type_ID) on delete cascade
+);
+
+CREATE TABLE Requests
+(
+    Staff_ID 		INT 	NOT NULL,
+    Equipment_ID 	INT 	NOT NULL,
+    Start_date 		DATE 	NOT NULL,
+    Return_date 	DATE,
+    Description 	TEXT,
+    FOREIGN KEY (Staff_ID) REFERENCES Staff(Staff_ID) on delete cascade,
+    FOREIGN KEY (Equipment_ID) REFERENCES Equipment(Equipment_ID) on delete cascade
+);
+
