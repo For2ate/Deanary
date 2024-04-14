@@ -34,7 +34,7 @@
             </Grid.RowDefinitions>
             <GroupBox Grid.Row="0" Header="Списки">
                 <StackPanel>
-                    <Button Content="Button" Style="{StaticResource Buttons}"/>
+                    <Button Content="Запросы в очереди" Style="{StaticResource Buttons}"/>
                     <Button Content="Button" Style="{StaticResource Buttons}"/>
                     <Button Content="Button" Style="{StaticResource Buttons}"/>
                     <Button Content="Button" Style="{StaticResource Buttons}"/>
