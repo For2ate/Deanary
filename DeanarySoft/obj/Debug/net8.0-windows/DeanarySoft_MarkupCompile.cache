@@ -4,7 +4,7 @@
 winexe
 C#
 .cs
-E:\Projects\C#\Deanary\DeanarySoft\obj\Debug\net8.0-windows\
+G:\Code\C#\Deanary\DeanarySoft\obj\Debug\net8.0-windows\
 DeanarySoft
 none
 false
@@ -12,9 +12,9 @@ TRACE;DEBUG;NET;NET8_0;NETCOREAPP
 
 2-315897675
 
-5-1806834065
-214955743815
+14-234708614
+214368767684
 BuisnessLayer\App.xaml;UI\MainWindow.xaml;
 
-False
+True
 
