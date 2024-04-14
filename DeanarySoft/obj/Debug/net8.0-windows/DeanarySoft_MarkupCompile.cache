@@ -16,5 +16,5 @@ TRACE;DEBUG;NET;NET8_0;NETCOREAPP
 214368767684
 BuisnessLayer\App.xaml;UI\MainWindow.xaml;
 
-True
+False
 
