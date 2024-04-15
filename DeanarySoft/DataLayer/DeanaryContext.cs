@@ -1,12 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
+using DeanarySoft.DataLayer.DataBaseClasses;
 using Microsoft.EntityFrameworkCore;
 
 namespace DeanarySoft.DataLayer;
 
 public partial class DeanaryContext : DbContext
 {
+
+    private string connectionString;
+
     public DeanaryContext() {
+    }
+    public DeanaryContext(string connectionString) {
+        this.connectionString = connectionString;
     }
 
     public DeanaryContext(DbContextOptions<DeanaryContext> options) : base(options) {
@@ -24,13 +31,11 @@ public partial class DeanaryContext : DbContext
 
     public virtual DbSet<Staff> Staff { get; set; }
 
+    public virtual DbSet<TypeStatus> TypeStatuses { get; set; }
+
     public virtual DbSet<Status> Statuses { get; set; }
 
-    public virtual DbSet<Status1> Statuses1 { get; set; }
-
-    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)  
-        #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see https://go.microsoft.com/fwlink/?LinkId=723263.
-        => optionsBuilder.UseNpgsql("Host=localhost;Port=5432;Database=deanary;Username=postgres;Password=***");
+    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) => optionsBuilder.UseNpgsql(connectionString);
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -147,7 +152,7 @@ public partial class DeanaryContext : DbContext
                 .HasColumnName("last_name");
         });
 
-        modelBuilder.Entity<Status>(entity =>
+        modelBuilder.Entity<TypeStatus>(entity =>
         {
             entity.HasKey(e => e.TypeId).HasName("statuses_pkey");
 
@@ -159,7 +164,7 @@ public partial class DeanaryContext : DbContext
                 .HasColumnName("status_type");
         });
 
-        modelBuilder.Entity<Status1>(entity =>
+        modelBuilder.Entity<Status>(entity =>
         {
             entity
                 .HasNoKey()
