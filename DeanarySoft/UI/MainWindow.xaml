@@ -7,6 +7,7 @@
         mc:Ignorable="d"
         Title="Deanery" MinHeight="450" MinWidth="800">
     <Window.Resources>
+        <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
         <Style TargetType="Button" x:Key="Buttons">
             <Setter Property="MaxHeight" Value="25"/>
             <Setter Property="MinHeight" Value="25"/>
@@ -65,29 +66,29 @@
             </Grid.RowDefinitions>
             <GroupBox Grid.Row="0" Header="Списки">
                 <StackPanel>
-                    <Button x:Name="RequestOrder" Content="Запросы в очереди" Style="{StaticResource Buttons}"/>
-                    <Button x:Name="RequestHistory" Content="История запросов" Style="{StaticResource Buttons}"/>
-                    <Button x:Name="EquipmentList" Content="Список оборудования" Style="{StaticResource Buttons}" Click="EquipmentList_Click"/>
-                    <Button x:Name="StaffList" Content="Список сотрудников" Style="{StaticResource Buttons}" Click="StaffList_Click"/>
+                    <Button x:Name="RequestOrder" Content="Запросы в очереди" Style="{StaticResource Buttons}"  Command="{Binding ShowNewRequestsCommand}"/>
+                    <Button x:Name="RequestHistory" Content="История запросов" Style="{StaticResource Buttons}" Command="{Binding ShowRequestHistoryCommand}"/>
+                    <Button x:Name="EquipmentList" Content="Список оборудования" Style="{StaticResource Buttons}" Command="{Binding ShowEquipmentCommand}"/>
+                    <Button x:Name="StaffList" Content="Список сотрудников" Style="{StaticResource Buttons}" Command="{Binding ShowStaffCommand}"/>
                 </StackPanel>
             </GroupBox>
             <GroupBox Grid.Row="2" Header="Меню" >
                 <Grid>
-                    <StackPanel x:Name="OrderMenu">
+                    <StackPanel x:Name="OrderMenu" Visibility="{Binding IsNewRequestsSelected, Converter={StaticResource BooleanToVisibilityConverter}}">
                         <Button x:Name="AcceptRequest" Content="Принять" Style="{StaticResource Buttons}"/>
                         <Button x:Name="DeclineOrder" Content="Отклонить" Style="{StaticResource Buttons}"/>
                         
                     </StackPanel >
-                    <StackPanel x:Name="HistoryMenu">
+                    <StackPanel x:Name="HistoryMenu"  Visibility="{Binding IsRequestHistSelected, Converter={StaticResource BooleanToVisibilityConverter}}">
                         <Button x:Name="DeleteRequest" Content="Удалить запрос" Style="{StaticResource Buttons}"/>
                         
                     </StackPanel>
-                    <StackPanel x:Name="EquipMenu">
+                    <StackPanel x:Name="EquipMenu"  Visibility="{Binding IsEquipmentSelected, Converter={StaticResource BooleanToVisibilityConverter}}">
                         <Button x:Name="AddEquip" Content="Добавить оборудование" Style="{StaticResource Buttons}"/>
                         <Button x:Name="EditEquip" Content="Редактировать" Style="{StaticResource Buttons}"/>
 
                     </StackPanel>
-                    <StackPanel x:Name="StaffMenu">
+                    <StackPanel x:Name="StaffMenu"  Visibility="{Binding IsStaffSelected, Converter={StaticResource BooleanToVisibilityConverter}}">
                         <Button x:Name="AddStaff" Content="Добавить сотрудника" Style="{StaticResource Buttons}"/>
                         <Button x:Name="EditStaff" Content="Редактировать информацию" Style="{StaticResource Buttons}"/>
                     </StackPanel>

@@ -8,8 +8,42 @@ namespace DeanarySoft.BuisnessLayer;
 
 public class MainViewModel : INotifyPropertyChanged
 {
+	private bool isRequestHistSelected;
+	private bool isNewRequestsSelected;
+	private bool isStaffSelected;
+	private bool isEquipmentSelected;
+
 	public enum DataType { Equipment, Staff, RequestHist, NewRequests }
 
+	public bool IsRequestHistSelected { get => isRequestHistSelected;
+		set
+		{
+			isRequestHistSelected = value;
+			OnPropertyChanged(nameof(IsRequestHistSelected));
+		}
+	}
+	public bool IsNewRequestsSelected { get => isNewRequestsSelected;
+		set
+		{
+			isNewRequestsSelected = value;
+			OnPropertyChanged(nameof(IsNewRequestsSelected));
+		}
+	}
+	public bool IsStaffSelected { get => isStaffSelected;
+		set
+		{
+			isStaffSelected = value;
+			OnPropertyChanged(nameof(IsStaffSelected));
+		}
+	}
+	public bool IsEquipmentSelected { get => isEquipmentSelected;
+		set
+		{
+			isEquipmentSelected = value;
+			OnPropertyChanged(nameof(IsEquipmentSelected));
+		}
+	}
+	
 	public ObservableCollection<object> Items { get; } = new ObservableCollection<object>();
 	public object SelectedItem { get; set; }
 	public DataType SelectedDataType { get; set; }
@@ -28,15 +62,27 @@ public class MainViewModel : INotifyPropertyChanged
 		ShowNewRequestsCommand = new DelegateCommand(async () => await ShowData(DataType.NewRequests));
 	}
 
+	// Загрузка данных в зависимости от dataType
+	// Вместе с вызовом методов заполнения коллекций происходит изменение видимости определенных меню для работы с конкретным отображением
+		
 	private async Task ShowData(DataType dataType)
 	{
 		SelectedDataType = dataType;
 		Items.Clear();
 		SelectedItem = null;
 
-		// Загрузка данных в зависимости от dataType 
+		IsStaffSelected = false;
+		IsEquipmentSelected = false;
+		IsRequestHistSelected = false;
+		IsNewRequestsSelected = false;
+	
+		// !!!!! Важно !!!!!
+		// return необходим для корректной смены меню, до реализации методов
 		if (dataType == DataType.Equipment)
 		{
+			IsEquipmentSelected = true;
+			return;
+
 			var equipmentList = await LoadEquipmentAsync();
 			foreach (var equipment in equipmentList)
 			{
@@ -45,6 +91,8 @@ public class MainViewModel : INotifyPropertyChanged
 		}
 		else if (dataType == DataType.Staff)
 		{
+			IsStaffSelected = true;
+			return;
 			var staffList = await LoadStaffAsync();
 			foreach (var staff in staffList)
 			{
@@ -53,6 +101,9 @@ public class MainViewModel : INotifyPropertyChanged
 		}
 		else if (dataType == DataType.RequestHist)
 		{
+			IsRequestHistSelected = true;
+			return;
+
 			var requestHistList = await LoadRequestHistAsync();
 			foreach (var request in requestHistList)
 			{
@@ -61,6 +112,8 @@ public class MainViewModel : INotifyPropertyChanged
 		}
 		else if (dataType == DataType.NewRequests)
 		{
+			IsNewRequestsSelected = true;
+			return;
 			var newRequestsList = await LoadNewRequestsAsync();
 			foreach (var request in newRequestsList)
 			{

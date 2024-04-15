@@ -20,22 +20,11 @@ namespace DeanarySoft {
     public partial class MainWindow : Window {
         public MainWindow() {
             InitializeComponent();
+            
             DataContext = new MainViewModel();
         }
 
-        private void StaffList_Click(object sender, RoutedEventArgs e) {
-            Sourse.HaveListObjectsFromDataBase(1);
-        }
-        private void EquipmentList_Click(object sender, RoutedEventArgs e) {
-            Sourse.HaveListObjectsFromDataBase(2);
-        }
 
-        public void FillList(List<IToStringValue> list) {
-            ListView.Items.Clear();
-            foreach (IToStringValue value in list) {
-                ListView.Items.Add(value.ToString());
-            }
-        }
-
+        
     }
 }
