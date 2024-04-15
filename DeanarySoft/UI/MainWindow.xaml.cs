@@ -20,6 +20,7 @@ namespace DeanarySoft {
     public partial class MainWindow : Window {
         public MainWindow() {
             InitializeComponent();
+            DataContext = new MainViewModel();
         }
 
         private void StaffList_Click(object sender, RoutedEventArgs e) {

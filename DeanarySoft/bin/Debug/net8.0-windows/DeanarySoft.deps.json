@@ -12,7 +12,8 @@
           "Microsoft.EntityFrameworkCore.Tools": "8.0.3",
           "Microsoft.Extensions.Configuration.Json": "8.0.0",
           "Npgsql.EntityFrameworkCore.PostgreSQL": "8.0.2",
-          "Npgsql.EntityFrameworkCore.PostgreSQL.Design": "1.1.0"
+          "Npgsql.EntityFrameworkCore.PostgreSQL.Design": "1.1.0",
+          "Prism.Wpf": "9.0.401-pre"
         },
         "runtime": {
           "DeanarySoft.dll": {}
@@ -517,6 +518,14 @@
           "System.Runtime": "4.3.0"
         }
       },
+      "Microsoft.Xaml.Behaviors.Wpf/1.1.77": {
+        "runtime": {
+          "lib/net6.0-windows7.0/Microsoft.Xaml.Behaviors.dll": {
+            "assemblyVersion": "1.1.0.0",
+            "fileVersion": "1.1.77.27830"
+          }
+        }
+      },
       "Mono.TextTemplating/2.2.1": {
         "dependencies": {
           "System.CodeDom": "4.4.0"
@@ -615,6 +624,49 @@
           "lib/netstandard1.3/Npgsql.EntityFrameworkCore.PostgreSQL.Design.dll": {
             "assemblyVersion": "1.1.0.0",
             "fileVersion": "1.1.0.0"
+          }
+        }
+      },
+      "Prism.Container.Abstractions/9.0.84-pre": {
+        "dependencies": {
+          "Microsoft.Extensions.DependencyInjection.Abstractions": "8.0.0"
+        },
+        "runtime": {
+          "lib/net8.0/Prism.Container.Abstractions.dll": {
+            "assemblyVersion": "9.0.84.51544",
+            "fileVersion": "9.0.84.51544"
+          }
+        }
+      },
+      "Prism.Core/9.0.401-pre": {
+        "dependencies": {
+          "Prism.Container.Abstractions": "9.0.84-pre",
+          "Prism.Events": "9.0.401-pre"
+        },
+        "runtime": {
+          "lib/net6.0/Prism.dll": {
+            "assemblyVersion": "9.0.401.20976",
+            "fileVersion": "9.0.401.20976"
+          }
+        }
+      },
+      "Prism.Events/9.0.401-pre": {
+        "runtime": {
+          "lib/net6.0/Prism.Events.dll": {
+            "assemblyVersion": "9.0.401.20976",
+            "fileVersion": "9.0.401.20976"
+          }
+        }
+      },
+      "Prism.Wpf/9.0.401-pre": {
+        "dependencies": {
+          "Microsoft.Xaml.Behaviors.Wpf": "1.1.77",
+          "Prism.Core": "9.0.401-pre"
+        },
+        "runtime": {
+          "lib/net6.0-windows7.0/Prism.Wpf.dll": {
+            "assemblyVersion": "9.0.401.20976",
+            "fileVersion": "9.0.401.20976"
           }
         }
       },
@@ -1558,6 +1610,13 @@
       "path": "microsoft.win32.primitives/4.3.0",
       "hashPath": "microsoft.win32.primitives.4.3.0.nupkg.sha512"
     },
+    "Microsoft.Xaml.Behaviors.Wpf/1.1.77": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-MCu674ZETgU18EbxfwIlRpUPJ02YbZenLsMCXTkpeA7KUBpXfFaOUDlEO+7UWu5AFnUoydg+aQENJkuaZPheMQ==",
+      "path": "microsoft.xaml.behaviors.wpf/1.1.77",
+      "hashPath": "microsoft.xaml.behaviors.wpf.1.1.77.nupkg.sha512"
+    },
     "Mono.TextTemplating/2.2.1": {
       "type": "package",
       "serviceable": true,
@@ -1592,6 +1651,34 @@
       "sha512": "sha512-+taA6t8sRI0JTbyCZH0GobEtJYvU4aAGBf5/2/CutWHiYpO2nLfJ8SQSyWYMKakrwn1/NDM9VV85mGEAzBZ7LQ==",
       "path": "npgsql.entityframeworkcore.postgresql.design/1.1.0",
       "hashPath": "npgsql.entityframeworkcore.postgresql.design.1.1.0.nupkg.sha512"
+    },
+    "Prism.Container.Abstractions/9.0.84-pre": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-gciHzh1Otcc3x0ISZR6APYpKRugsDEuYE4zaLBjCf6CkUClDRg4/nxxlxZovZu9iZ1xwEZMziJco5rg1V+vbLQ==",
+      "path": "prism.container.abstractions/9.0.84-pre",
+      "hashPath": "prism.container.abstractions.9.0.84-pre.nupkg.sha512"
+    },
+    "Prism.Core/9.0.401-pre": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-/Amx/o/YHMf49Rom3zPE+g6BAL/iJrUHTII1W/G1j6CdYuXT/s6rEkXr+pDFVfgSI3WkhEE+8vzB00qj4WoIKg==",
+      "path": "prism.core/9.0.401-pre",
+      "hashPath": "prism.core.9.0.401-pre.nupkg.sha512"
+    },
+    "Prism.Events/9.0.401-pre": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-B8LKc2C6bUXncdQyVCMJ4tGE5wkWpB+mhOHff8D2BpSkd/7WoOzqrEE7zdHUHpq22SQb6ibI/Ss9ODQmkKj9YQ==",
+      "path": "prism.events/9.0.401-pre",
+      "hashPath": "prism.events.9.0.401-pre.nupkg.sha512"
+    },
+    "Prism.Wpf/9.0.401-pre": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-ss0EYTwB19jrbSAA6gmvsooRybuYPq29V+AprmIM2Xzb+HTs0o3nmmYdMxSEBNQWOEtkuLpHD8U4Ayxqc48Ubg==",
+      "path": "prism.wpf/9.0.401-pre",
+      "hashPath": "prism.wpf.9.0.401-pre.nupkg.sha512"
     },
     "runtime.debian.8-x64.runtime.native.System.Security.Cryptography.OpenSsl/4.3.0": {
       "type": "package",

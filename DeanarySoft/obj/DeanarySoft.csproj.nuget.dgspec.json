@@ -1,23 +1,23 @@
 {
   "format": 1,
   "restore": {
-    "E:\\Projects\\C#\\Deanary\\DeanarySoft\\DeanarySoft.csproj": {}
+    "G:\\Code\\C#\\Deanary\\DeanarySoft\\DeanarySoft.csproj": {}
   },
   "projects": {
-    "E:\\Projects\\C#\\Deanary\\DeanarySoft\\DeanarySoft.csproj": {
+    "G:\\Code\\C#\\Deanary\\DeanarySoft\\DeanarySoft.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "E:\\Projects\\C#\\Deanary\\DeanarySoft\\DeanarySoft.csproj",
+        "projectUniqueName": "G:\\Code\\C#\\Deanary\\DeanarySoft\\DeanarySoft.csproj",
         "projectName": "DeanarySoft",
-        "projectPath": "E:\\Projects\\C#\\Deanary\\DeanarySoft\\DeanarySoft.csproj",
-        "packagesPath": "C:\\Users\\vanes\\.nuget\\packages\\",
-        "outputPath": "E:\\Projects\\C#\\Deanary\\DeanarySoft\\obj\\",
+        "projectPath": "G:\\Code\\C#\\Deanary\\DeanarySoft\\DeanarySoft.csproj",
+        "packagesPath": "C:\\Users\\makst\\.nuget\\packages\\",
+        "outputPath": "G:\\Code\\C#\\Deanary\\DeanarySoft\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\vanes\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\makst\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
@@ -39,6 +39,11 @@
           "warnAsError": [
             "NU1605"
           ]
+        },
+        "restoreAuditProperties": {
+          "enableAudit": "true",
+          "auditLevel": "low",
+          "auditMode": "direct"
         }
       },
       "frameworks": {
@@ -68,6 +73,10 @@
             "Npgsql.EntityFrameworkCore.PostgreSQL.Design": {
               "target": "Package",
               "version": "[1.1.0, )"
+            },
+            "Prism.Wpf": {
+              "target": "Package",
+              "version": "[9.0.401-pre, )"
             }
           },
           "imports": [
@@ -89,7 +98,7 @@
               "privateAssets": "none"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.101/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.204/PortableRuntimeIdentifierGraph.json"
         }
       }
     }
