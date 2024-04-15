@@ -1,0 +1,32 @@
+--сотрудники и все их номера
+select staff_id, first_name, last_name, (
+	select array_agg(contact) from contactphones cph
+	where st.staff_id = cph.staff_id
+) as phones
+from	
+	staff st
+order by phones desc;
+
+
+--фи человека и запрос
+select * 
+	from 
+		(select staff_id, first_name, last_name from staff) st
+		join requests rq
+	on
+		st.staff_id = rq.staff_id;
+
+--вывести всех сотрудников со значением равным максимальным
+select * from staff st1
+	where 
+		st1.access_level = (select max(access_level) as mx from staff);
+
+--сотрудники у которых есть запросы несвязанное
+select * from staff st1
+	where 
+		st1.staff_id in (select req.staff_id from requests req);
+
+--сотрудники у которых есть запросы связанное
+select * from staff st1
+	where 
+		1 in (select 1 from requests req where st1.staff_id = req.staff_id)
