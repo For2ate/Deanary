@@ -219,3 +219,17 @@ E:\Projects\C#\Deanary\DeanarySoft\bin\Debug\net8.0-windows\Microsoft.Extensions
 E:\Projects\C#\Deanary\DeanarySoft\bin\Debug\net8.0-windows\Microsoft.Extensions.FileProviders.Abstractions.dll
 E:\Projects\C#\Deanary\DeanarySoft\bin\Debug\net8.0-windows\Microsoft.Extensions.FileProviders.Physical.dll
 E:\Projects\C#\Deanary\DeanarySoft\bin\Debug\net8.0-windows\Microsoft.Extensions.FileSystemGlobbing.dll
+<<<<<<< HEAD
+=======
+G:\Code\C#\Deanary\DeanarySoft\bin\Debug\net8.0-windows\Microsoft.Extensions.Configuration.dll
+G:\Code\C#\Deanary\DeanarySoft\bin\Debug\net8.0-windows\Microsoft.Extensions.Configuration.FileExtensions.dll
+G:\Code\C#\Deanary\DeanarySoft\bin\Debug\net8.0-windows\Microsoft.Extensions.Configuration.Json.dll
+G:\Code\C#\Deanary\DeanarySoft\bin\Debug\net8.0-windows\Microsoft.Extensions.FileProviders.Abstractions.dll
+G:\Code\C#\Deanary\DeanarySoft\bin\Debug\net8.0-windows\Microsoft.Extensions.FileProviders.Physical.dll
+G:\Code\C#\Deanary\DeanarySoft\bin\Debug\net8.0-windows\Microsoft.Extensions.FileSystemGlobbing.dll
+G:\Code\C#\Deanary\DeanarySoft\bin\Debug\net8.0-windows\Microsoft.Xaml.Behaviors.dll
+G:\Code\C#\Deanary\DeanarySoft\bin\Debug\net8.0-windows\Prism.Container.Abstractions.dll
+G:\Code\C#\Deanary\DeanarySoft\bin\Debug\net8.0-windows\Prism.dll
+G:\Code\C#\Deanary\DeanarySoft\bin\Debug\net8.0-windows\Prism.Events.dll
+G:\Code\C#\Deanary\DeanarySoft\bin\Debug\net8.0-windows\Prism.Wpf.dll
+>>>>>>> cc8216bc489fab7bab5e0d7c22fcc7a0bab66387

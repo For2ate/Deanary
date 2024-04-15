@@ -13,8 +13,8 @@ public partial class Staff : IToStringValue, INotifyPropertyChanged {
         set { firstName = value; OnPropertyChanged("FirstName"); }
     }
     private string lastName = null!;
-    public string LastName { 
-        get { return this.lastName;}
+    public string LastName {
+        get { return this.lastName; }
         set { lastName = value; OnPropertyChanged("LastName"); }
     }
     private string department = null!;
@@ -48,5 +48,4 @@ public partial class Staff : IToStringValue, INotifyPropertyChanged {
     public virtual void OnPropertyChanged([CallerMemberName] string propertyName = "") {
         if (PropertyChanged != null) { PropertyChanged(this, new PropertyChangedEventArgs(propertyName)); }
     }
-
 }
