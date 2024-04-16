@@ -4,7 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:DeanarySoft"
-        xmlns:ui="clr-namespace:DeanarySoft.UI"
+        xmlns:ui="clr-namespace:DeanarySoft.View"
         xmlns:dataBaseClasses="clr-namespace:DeanarySoft.DataLayer.DataBaseClasses"
         mc:Ignorable="d"
         Title="Deanery" MinHeight="450" MinWidth="800">
