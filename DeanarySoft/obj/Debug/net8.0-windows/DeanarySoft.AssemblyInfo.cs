@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("DeanarySoft")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+1aaf24dd8f6ea4ac31aadebbc23e9a4a75066369")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+d3668345589bf6da2b1f0ae69ab2f6e47fd3d0e5")]
 [assembly: System.Reflection.AssemblyProductAttribute("DeanarySoft")]
 [assembly: System.Reflection.AssemblyTitleAttribute("DeanarySoft")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

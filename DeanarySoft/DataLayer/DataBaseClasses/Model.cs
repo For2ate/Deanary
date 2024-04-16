@@ -9,7 +9,7 @@ public partial class Model : IToStringValue
 
     public string Manufactor { get; set; } = null!;
 
-    public string Model1 { get; set; } = null!;
+    public string ModelName { get; set; } = null!;
 
     public string EquipmentType { get; set; } = null!;
 
@@ -18,6 +18,6 @@ public partial class Model : IToStringValue
     public virtual ICollection<Equipment> Equipment { get; set; } = new List<Equipment>();
 
     public override string ToString() {
-        return $"{Manufactor}, {Model1}, {EquipmentType}";
+        return $"{Manufactor}, {ModelName}, {EquipmentType}";
     }
 }
