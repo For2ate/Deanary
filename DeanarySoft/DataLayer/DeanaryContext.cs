@@ -78,7 +78,7 @@ public partial class DeanaryContext : DbContext
 
             entity.Property(e => e.IdОборудования).HasColumnName("ID оборудования");
             entity.Property(e => e.IdСотрудника).HasColumnName("ID сотрудника");
-            entity.Property(e => e.ДатаВводаВЭксплуотацию).HasColumnName("Дата ввода в эксплуотацию");
+            entity.Property(e => e.ДатаВводаВЭксплуотацию).HasColumnName("Дата ввода в эксплуатацию");
             entity.Property(e => e.ДатаВозврата).HasColumnName("Дата возврата");
             entity.Property(e => e.ДатаВыдачи).HasColumnName("Дата выдачи");
             entity.Property(e => e.Кафедра).HasMaxLength(40);
@@ -106,7 +106,7 @@ public partial class DeanaryContext : DbContext
             entity.Property(e => e.Manufactor)
                 .HasMaxLength(30)
                 .HasColumnName("manufactor");
-            entity.Property(e => e.Model1)
+            entity.Property(e => e.ModelName)
                 .HasMaxLength(30)
                 .HasColumnName("model");
         });
