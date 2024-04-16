@@ -40,7 +40,7 @@ namespace DeanarySoft.BuisnessLayer {
                 case 2:
                     obj = new List<IToStringValue>(context.Models.ToList());break;
             }
-            mainWindow.FillList(obj);
+            //mainWindow.FillList(obj);
         }
 
     }

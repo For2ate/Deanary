@@ -14,7 +14,11 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("DeanarySoft")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
+<<<<<<< HEAD
 [assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+0f06c1cbb7aaee247fbd5e8c2689216e425d9eb7")]
+=======
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+d3668345589bf6da2b1f0ae69ab2f6e47fd3d0e5")]
+>>>>>>> 876ead14825d3c1957b59ba1869973bf0a568287
 [assembly: System.Reflection.AssemblyProductAttribute("DeanarySoft")]
 [assembly: System.Reflection.AssemblyTitleAttribute("DeanarySoft")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
