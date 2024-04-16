@@ -4,7 +4,7 @@
 winexe
 C#
 .cs
-G:\Code\C#\Deanary\DeanarySoft\obj\Debug\net8.0-windows\
+E:\Projects\C#\Deanary\DeanarySoft\obj\Debug\net8.0-windows\
 DeanarySoft
 none
 false
@@ -12,13 +12,8 @@ TRACE;DEBUG;NET;NET8_0;NETCOREAPP
 
 2-315897675
 
-<<<<<<< HEAD
-20560081906
-220-1896845025
-=======
-21-1156523332
-225-2031564166
->>>>>>> cc8216bc489fab7bab5e0d7c22fcc7a0bab66387
+241079902866
+225-264685178
 BuisnessLayer\App.xaml;UI\MainWindow.xaml;
 
 False

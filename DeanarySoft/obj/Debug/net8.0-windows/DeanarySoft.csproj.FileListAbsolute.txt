@@ -233,3 +233,8 @@ G:\Code\C#\Deanary\DeanarySoft\bin\Debug\net8.0-windows\Prism.dll
 G:\Code\C#\Deanary\DeanarySoft\bin\Debug\net8.0-windows\Prism.Events.dll
 G:\Code\C#\Deanary\DeanarySoft\bin\Debug\net8.0-windows\Prism.Wpf.dll
 >>>>>>> cc8216bc489fab7bab5e0d7c22fcc7a0bab66387
+E:\Projects\C#\Deanary\DeanarySoft\bin\Debug\net8.0-windows\Microsoft.Xaml.Behaviors.dll
+E:\Projects\C#\Deanary\DeanarySoft\bin\Debug\net8.0-windows\Prism.Container.Abstractions.dll
+E:\Projects\C#\Deanary\DeanarySoft\bin\Debug\net8.0-windows\Prism.dll
+E:\Projects\C#\Deanary\DeanarySoft\bin\Debug\net8.0-windows\Prism.Events.dll
+E:\Projects\C#\Deanary\DeanarySoft\bin\Debug\net8.0-windows\Prism.Wpf.dll

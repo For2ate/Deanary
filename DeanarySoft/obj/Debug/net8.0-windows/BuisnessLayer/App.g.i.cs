@@ -59,7 +59,7 @@ namespace DeanarySoft {
                 return;
             }
             _contentLoaded = true;
-            System.Uri resourceLocater = new System.Uri("/DeanarySoft;V1.0.0.0;component/buisnesslayer/app.xaml", System.UriKind.Relative);
+            System.Uri resourceLocater = new System.Uri("/DeanarySoft;component/buisnesslayer/app.xaml", System.UriKind.Relative);
             
             #line 1 "..\..\..\..\BuisnessLayer\App.xaml"
             System.Windows.Application.LoadComponent(this, resourceLocater);

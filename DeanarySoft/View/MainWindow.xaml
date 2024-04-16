@@ -1,0 +1,151 @@
+﻿<Window x:Class="DeanarySoft.View.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:DeanarySoft"
+        xmlns:ui="clr-namespace:DeanarySoft.UI"
+        xmlns:dataBaseClasses="clr-namespace:DeanarySoft.DataLayer.DataBaseClasses"
+        mc:Ignorable="d"
+        Title="Deanery" MinHeight="450" MinWidth="800">
+    <Window.Resources>
+        
+        <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+        <Style TargetType="Button" x:Key="Buttons">
+            <Setter Property="MaxHeight" Value="25"/>
+            <Setter Property="MinHeight" Value="25"/>
+            <Setter Property="Margin" Value="0 0 0 0"></Setter>
+            <Setter Property="BorderBrush" Value="LightSteelBlue"></Setter>
+            <Setter Property="Background" Value="LightGoldenrodYellow"/>
+        </Style>
+        <Style TargetType="GroupBox">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="GroupBox">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="*" />
+                            </Grid.RowDefinitions>
+                            <Border Grid.Row="0"
+                                    BorderThickness="1"
+                                    BorderBrush="Linen"
+                                    Background="Linen">
+                                <Label Foreground="Black">   
+                                    <ContentPresenter Margin="1"
+                                                      ContentSource="Header"
+                                                      RecognizesAccessKey="True" />
+                                </Label>
+                            </Border>
+
+                            <Border Grid.Row="1">
+                                <ContentPresenter Margin="4" />
+                            </Border>
+
+                        </Grid>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Resources>
+    <Grid x:Name="Main" Background="Wheat">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="0.1*"/>
+            <RowDefinition/>
+            <RowDefinition Height="0.1*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="0.01*"/>
+            <ColumnDefinition Width="0.2*"/>
+            <ColumnDefinition Width="0.5*"/>
+            <ColumnDefinition Width="0.2*"/>
+            <ColumnDefinition Width="0.01*"/>
+        </Grid.ColumnDefinitions>
+        <Grid Row="1" Column="1" Background="Linen">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="0.35*"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="0.55*"/>
+            </Grid.RowDefinitions>
+            <GroupBox Grid.Row="0" Header="Списки">
+                <StackPanel>
+                    <Button x:Name="RequestOrder" Content="Запросы в очереди" Style="{StaticResource Buttons}"  Command="{Binding ShowNewRequestsCommand}"/>
+                    <Button x:Name="RequestHistory" Content="История запросов" Style="{StaticResource Buttons}" Command="{Binding ShowRequestHistoryCommand}"/>
+                    <Button x:Name="EquipmentList" Content="Список оборудования" Style="{StaticResource Buttons}" Command="{Binding ShowEquipmentCommand}"/>
+                    <Button x:Name="StaffList" Content="Список сотрудников" Style="{StaticResource Buttons}" Command="{Binding ShowStaffCommand}"/>
+                </StackPanel>
+            </GroupBox>
+            <GroupBox Grid.Row="2" Header="Меню" >
+                <Grid>
+                    <StackPanel x:Name="OrderMenu" Visibility="{Binding IsNewRequestsSelected, Converter={StaticResource BooleanToVisibilityConverter}}">
+                        <Button x:Name="AcceptRequest" Content="Принять" Style="{StaticResource Buttons}"/>
+                        <Button x:Name="DeclineOrder" Content="Отклонить" Style="{StaticResource Buttons}"/>
+                        
+                    </StackPanel >
+                    <StackPanel x:Name="HistoryMenu"  Visibility="{Binding IsRequestHistSelected, Converter={StaticResource BooleanToVisibilityConverter}}">
+                        <Button x:Name="DeleteRequest" Content="Удалить запрос" Style="{StaticResource Buttons}"/>
+                        
+                    </StackPanel>
+                    <StackPanel x:Name="EquipMenu"  Visibility="{Binding IsEquipmentSelected, Converter={StaticResource BooleanToVisibilityConverter}}">
+                        <Button x:Name="AddEquip" Content="Добавить оборудование" Style="{StaticResource Buttons}"/>
+                        <Button x:Name="EditEquip" Content="Редактировать" Style="{StaticResource Buttons}"/>
+
+                    </StackPanel>
+                    <StackPanel x:Name="StaffMenu"  Visibility="{Binding IsStaffSelected, Converter={StaticResource BooleanToVisibilityConverter}}">
+                        <Button x:Name="AddStaff" Content="Добавить сотрудника" Style="{StaticResource Buttons}"/>
+                        <Button x:Name="EditStaff" Content="Редактировать информацию" Style="{StaticResource Buttons}"/>
+                    </StackPanel>
+                </Grid>
+            </GroupBox>
+        </Grid>
+        <ListView x:Name="EquipView" Grid.Row="1" Grid.Column="2" Margin="10 0 10 0" ItemsSource="{Binding Items}"
+                  Visibility="{Binding IsEquipmentSelected, Converter={StaticResource BooleanToVisibilityConverter}}">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn DisplayMemberBinding="{Binding EquipmentId}" Width="25">ID</GridViewColumn>
+                    <GridViewColumn DisplayMemberBinding="{Binding Manufactor}" Width="100">Производитель</GridViewColumn>
+                    <GridViewColumn DisplayMemberBinding="{Binding ModelName}" Width="100">Модель</GridViewColumn>
+                    <GridViewColumn DisplayMemberBinding="{Binding EquipmentType}" Width="100">Тип</GridViewColumn>
+                    <GridViewColumn DisplayMemberBinding="{Binding CommissioningDate}">Дата ввода в эксплуатацию</GridViewColumn>
+                </GridView>
+            </ListView.View>
+        </ListView>
+        <ListView x:Name="StaffView" Grid.Row="1" Grid.Column="2" Margin="10 0 10 0" ItemsSource="{Binding Items}"
+                  Visibility="{Binding IsStaffSelected, Converter={StaticResource BooleanToVisibilityConverter}}">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn DisplayMemberBinding="{Binding StaffId}" Width="25">ID</GridViewColumn>
+                    <GridViewColumn DisplayMemberBinding="{Binding Name}" Width="100">Имя</GridViewColumn>
+                    <GridViewColumn DisplayMemberBinding="{Binding Department}" Width="100">Кафедра</GridViewColumn>
+                    <GridViewColumn DisplayMemberBinding="{Binding AccessLevel}" Width="100">Уровень доступа</GridViewColumn>
+                </GridView>
+            </ListView.View>
+        </ListView>
+        <ListView x:Name="RequestHistView" Grid.Row="1" Grid.Column="2" Margin="10 0 10 0" ItemsSource="{Binding Items}"
+                  Visibility="{Binding IsRequestHistSelected, Converter={StaticResource BooleanToVisibilityConverter}}">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn DisplayMemberBinding="{Binding EquipmentId}" >ID обор</GridViewColumn>
+                    <GridViewColumn DisplayMemberBinding="{Binding ModelInfo}" >Оборудование</GridViewColumn>
+                    <GridViewColumn DisplayMemberBinding="{Binding StaffId}" >ID сотр</GridViewColumn>
+                    <GridViewColumn DisplayMemberBinding="{Binding StaffName}">Сотрудник</GridViewColumn>
+                    <GridViewColumn DisplayMemberBinding="{Binding StartDate}">Взят в исп.</GridViewColumn>
+                    <GridViewColumn DisplayMemberBinding="{Binding ReturnDate}">Возвращен</GridViewColumn>
+                </GridView>
+            </ListView.View>
+        </ListView>
+        <ListView x:Name="NewRequestsView" Grid.Row="1" Grid.Column="2" Margin="10 0 10 0" ItemsSource="{Binding NewRequests}"
+                  Visibility="{Binding IsNewRequestsSelected, Converter={StaticResource BooleanToVisibilityConverter}}">
+        </ListView>
+        <Grid Row="1" Column="3" Background="Linen">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="0.6*"/>
+                <RowDefinition Height="0.3*"/>
+                <RowDefinition Height="0.1*"/>
+            </Grid.RowDefinitions>
+            <GroupBox  Header="Подробнее"></GroupBox>
+        </Grid>
+        <Button Grid.Row="2" Grid.Column="3" MaxHeight="20" MinHeight="20">Выход</Button>
+
+    </Grid>
+</Window>

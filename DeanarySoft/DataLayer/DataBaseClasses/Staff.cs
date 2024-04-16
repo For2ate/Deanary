@@ -43,7 +43,6 @@ public partial class Staff : IToStringValue, INotifyPropertyChanged {
         return $"{FirstName} {LastName}, кафедра: {Department}, уровень доступа: {AccessLevel}, краткие сведения: {Description}";
     }
 
-
     public event PropertyChangedEventHandler? PropertyChanged;
     public virtual void OnPropertyChanged([CallerMemberName] string propertyName = "") {
         if (PropertyChanged != null) { PropertyChanged(this, new PropertyChangedEventArgs(propertyName)); }

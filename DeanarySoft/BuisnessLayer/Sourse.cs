@@ -8,28 +8,30 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 
+using DeanarySoft.View;
+
 namespace DeanarySoft.BuisnessLayer {
 
     public class Sourse {
 
-        private static DeanaryContext context;
+        private static DeanaryContext context = new DeanaryContext();
         private static MainWindow mainWindow = new MainWindow();
 
         [STAThread()]
         public static void Main() {
-            ConnectingDataBase();
             App mainApplication = new App();
             mainApplication.Run(mainWindow);
         }
 
-        private static void ConnectingDataBase() {
+        public static DeanaryContext ConnectingDataBase() {
             //достаем строку подключения
             var builder = new ConfigurationBuilder();
             builder.SetBasePath(Directory.GetCurrentDirectory());
             builder.AddJsonFile("appsettings.json");
             var config = builder.Build();
             var connectionString = config.GetConnectionString("DefaultConnection");
-            context = new DeanaryContext(connectionString);
+            DeanaryContext _context = new DeanaryContext(connectionString);
+            return _context;
         }
 
         public static void HaveListObjectsFromDataBase(int typeOfObject) {
