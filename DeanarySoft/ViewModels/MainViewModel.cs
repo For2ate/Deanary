@@ -15,56 +15,56 @@ namespace DeanarySoft.ViewModels;
 
 public class MainViewModel : INotifyPropertyChanged
 {
-    private bool isRequestHistSelected = true;
-    private bool isNewRequestsSelected;
-    private bool isStaffSelected;
-    private bool isEquipmentSelected;
-    private readonly DeanaryContext _context = new DeanaryContext();
+    private bool _isRequestHistSelected = true;
+    private bool _isNewRequestsSelected;
+    private bool _isStaffSelected;
+    private bool _isEquipmentSelected;
+    private readonly DeanaryContext _context;
 
-    public enum DataType { Equipment, Staff, RequestHist, NewRequests }
+    public enum DataType { Equipment, Staff, RequestHist, NewRequests, UnSelected}
 
+    
+    
     public bool IsRequestHistSelected
     {
-        get => isRequestHistSelected;
+        get => _isRequestHistSelected;
         set
         {
-            isRequestHistSelected = value;
+            _isRequestHistSelected = value;
             OnPropertyChanged(nameof(IsRequestHistSelected));
         }
     }
     public bool IsNewRequestsSelected
     {
-        get => isNewRequestsSelected;
+        get => _isNewRequestsSelected;
         set
         {
-            isNewRequestsSelected = value;
+            _isNewRequestsSelected = value;
             OnPropertyChanged(nameof(IsNewRequestsSelected));
         }
     }
     public bool IsStaffSelected
     {
-        get => isStaffSelected;
+        get => _isStaffSelected;
         set
         {
-            isStaffSelected = value;
+            _isStaffSelected = value;
             OnPropertyChanged(nameof(IsStaffSelected));
         }
     }
     public bool IsEquipmentSelected
     {
-        get => isEquipmentSelected;
+        get => _isEquipmentSelected;
         set
         {
-            isEquipmentSelected = value;
+            _isEquipmentSelected = value;
             OnPropertyChanged(nameof(IsEquipmentSelected));
         }
     }
 
+    
+    
     public ObservableCollection<object> Items { get; set; } = new ObservableCollection<object>();
-    public ObservableCollection<object> EquipmentList { get; set; } = new ObservableCollection<object>();
-    public ObservableCollection<object> StaffList { get; set; } = new ObservableCollection<object>();
-    public ObservableCollection<object> ReqHistory { get; set; } = new ObservableCollection<object>();
-    public ObservableCollection<object> NewRequests { get; set; } = new ObservableCollection<object>();
     public object SelectedItem { get; set; }
     public DataType SelectedDataType { get; set; }
 
@@ -80,81 +80,72 @@ public class MainViewModel : INotifyPropertyChanged
         ShowStaffCommand = new DelegateCommand(async () => await ShowData(DataType.Staff));
         ShowRequestHistoryCommand = new DelegateCommand(async () => await ShowData(DataType.RequestHist));
         ShowNewRequestsCommand = new DelegateCommand(async () => await ShowData(DataType.NewRequests));
+        
         _context = Sourse.ConnectingDataBase();
         ShowData(DataType.RequestHist);
+        
     }
     // Загрузка данных в зависимости от dataType
     // Вместе с вызовом методов заполнения коллекций происходит изменение видимости определенных меню для работы с конкретным отображением
-
+    // Возможно изменение кода в соответствии с SOLID
     private async Task ShowData(DataType dataType)
     {
         SelectedDataType = dataType;
         Items.Clear();
         SelectedItem = null;
+        
+        SetSelectedType(SelectedDataType);
+        switch (SelectedDataType)
+        {
+            case DataType.Equipment:
+                GetData(await LoadEquipmentAsync());
+                break;
+            case DataType.Staff:
+                GetData(await LoadStaffAsync());
+                break;
+            case DataType.RequestHist:
+                GetData(await LoadRequestHistAsync());
+                break;
+            case DataType.NewRequests:
+            {
+                IsNewRequestsSelected = true;
+                break;
+            }
+        }
+    }
+    
+    public void GetData(IEnumerable recivedData)
+    {
+        foreach (var item in recivedData)
+        {
+            Items.Add(item);
+        }
+    }
 
-        IsStaffSelected = false;
+    public void SetSelectedType(DataType dataType)
+    {
         IsEquipmentSelected = false;
+        IsStaffSelected = false;
         IsRequestHistSelected = false;
         IsNewRequestsSelected = false;
 
-        // !!!!! Важно !!!!!
-        // return необходим для корректной смены меню, до реализации методов
-        if (dataType == DataType.Equipment)
+        switch (dataType)
         {
-            IsEquipmentSelected = true;
-            var equipmentList = await LoadEquipmentAsync();
-            foreach (var equipment in equipmentList)
-            {
-                Items.Add(equipment);
-            }
-        }
-        else if (dataType == DataType.Staff)
-        {
-            IsStaffSelected = true;
-            var staffList = await LoadStaffAsync();
-            foreach (var staff in staffList)
-            {
-                Items.Add(staff);
-            }
-        }
-        else if (dataType == DataType.RequestHist)
-        {
-            IsRequestHistSelected = true;
-            var requestHistList = await LoadRequestHistAsync();
-            foreach (var request in requestHistList)
-            {
-                Items.Add(request);
-            }
-        }
-        else if (dataType == DataType.NewRequests)
-        {
-            IsNewRequestsSelected = true;
-            return;
-            var newRequestsList = await LoadNewRequestsAsync();
-            foreach (var request in newRequestsList)
-            {
-                Items.Add(request);
-            }
+            case DataType.Equipment:
+                IsEquipmentSelected = true;
+                break;
+            case DataType.Staff:
+                IsStaffSelected = true;
+                break;
+            case DataType.RequestHist:
+                IsRequestHistSelected = true;
+                break;
+            case DataType.NewRequests:
+                IsNewRequestsSelected = true;
+                break;
         }
     }
-
-
-
-    // ... Реализация INotifyPropertyChanged ...
-    public event PropertyChangedEventHandler? PropertyChanged;
-
-    protected virtual void OnPropertyChanged([CallerMemberName] string? propertyName = null)
-    {
-        PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-    }
-
-    protected bool SetField<T>(ref T field, T value, [CallerMemberName] string? propertyName = null)
-    {
-        if (EqualityComparer<T>.Default.Equals(field, value)) return false;
-        field = value;
-        OnPropertyChanged(propertyName);
-        return true;
-    }
+   
     // ... Методы для загрузки данных
 
     private async Task<IEnumerable> LoadNewRequestsAsync()
@@ -209,5 +200,22 @@ public class MainViewModel : INotifyPropertyChanged
 
         return new ObservableCollection<object>(equipment);
     }
+    
+    
+    
+    // ... Реализация INotifyPropertyChanged ...
+    public event PropertyChangedEventHandler? PropertyChanged;
 
+    protected virtual void OnPropertyChanged([CallerMemberName] string? propertyName = null)
+    {
+        PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+    }
+
+    protected bool SetField<T>(ref T field, T value, [CallerMemberName] string? propertyName = null)
+    {
+        if (EqualityComparer<T>.Default.Equals(field, value)) return false;
+        field = value;
+        OnPropertyChanged(propertyName);
+        return true;
+    }
 }
