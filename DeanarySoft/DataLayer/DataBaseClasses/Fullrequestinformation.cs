@@ -3,8 +3,7 @@ using System.Collections.Generic;
 
 namespace DeanarySoft.DataLayer.DataBaseClasses;
 
-public partial class Fullrequestinformation
-{
+public partial class Fullrequestinformation {
     public int? IdСотрудника { get; set; }
 
     public string? ФиСотрудника { get; set; }

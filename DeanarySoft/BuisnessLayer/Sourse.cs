@@ -1,5 +1,4 @@
-﻿using DeanarySoft.DataLayer;
-using Microsoft.Extensions.Configuration;
+﻿using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -9,8 +8,10 @@ using System.Text;
 using System.Threading.Tasks;
 
 using DeanarySoft.View;
+using DeanarySoft.DataLayer.Context;
 
-namespace DeanarySoft.BuisnessLayer {
+namespace DeanarySoft.BuisnessLayer
+{
 
     public class Sourse {
 
@@ -19,6 +20,7 @@ namespace DeanarySoft.BuisnessLayer {
 
         [STAThread()]
         public static void Main() {
+            context = ConnectingDataBase();
             App mainApplication = new App();
             mainApplication.Run(mainWindow);
         }
@@ -32,18 +34,7 @@ namespace DeanarySoft.BuisnessLayer {
             var connectionString = config.GetConnectionString("DefaultConnection");
             DeanaryContext _context = new DeanaryContext(connectionString);
             return _context;
-        }
-
-        public static void HaveListObjectsFromDataBase(int typeOfObject) {
-            var obj = new List<IToStringValue>();
-            switch (typeOfObject) {
-                case 1: 
-                    obj = new List<IToStringValue>(context.Staff.ToList()); break;
-                case 2:
-                    obj = new List<IToStringValue>(context.Models.ToList());break;
-            }
-            //mainWindow.FillList(obj);
-        }
+        } 
 
     }
 }

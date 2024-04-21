@@ -2,11 +2,12 @@
 using System.Collections.Generic;
 using DeanarySoft.DataLayer.DataBaseClasses;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
+using System.IO;
 
-namespace DeanarySoft.DataLayer;
+namespace DeanarySoft.DataLayer.Context;
 
-public partial class DeanaryContext : DbContext
-{
+public partial class DeanaryContext : DbContext {
 
     private string connectionString;
 
@@ -35,12 +36,11 @@ public partial class DeanaryContext : DbContext
 
     public virtual DbSet<Status> Statuses { get; set; }
 
-    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) => optionsBuilder.UseNpgsql(connectionString);
-
-    protected override void OnModelCreating(ModelBuilder modelBuilder)
-    {
-        modelBuilder.Entity<Contactphone>(entity =>
-        {
+    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) {
+        optionsBuilder.UseNpgsql(connectionString);
+    }
+    protected override void OnModelCreating(ModelBuilder modelBuilder) {
+        modelBuilder.Entity<Contactphone>(entity => {
             entity.HasKey(e => new { e.Contact, e.StaffId }).HasName("contactphones_pkey");
 
             entity.ToTable("contactphones", "deanary");
@@ -53,8 +53,7 @@ public partial class DeanaryContext : DbContext
                 .HasConstraintName("contactphones_staff_id_fkey");
         });
 
-        modelBuilder.Entity<Equipment>(entity =>
-        {
+        modelBuilder.Entity<Equipment>(entity => {
             entity.HasKey(e => e.EquipmentId).HasName("equipment_pkey");
 
             entity.ToTable("equipment", "deanary");
@@ -70,8 +69,7 @@ public partial class DeanaryContext : DbContext
                 .HasConstraintName("equipment_model_id_fkey");
         });
 
-        modelBuilder.Entity<Fullrequestinformation>(entity =>
-        {
+        modelBuilder.Entity<Fullrequestinformation>(entity => {
             entity
                 .HasNoKey()
                 .ToView("fullrequestinformation", "deanary");
@@ -92,8 +90,7 @@ public partial class DeanaryContext : DbContext
             entity.Property(e => e.ФиСотрудника).HasColumnName("ФИ сотрудника");
         });
 
-        modelBuilder.Entity<Model>(entity =>
-        {
+        modelBuilder.Entity<Model>(entity => {
             entity.HasKey(e => e.ModelId).HasName("models_pkey");
 
             entity.ToTable("models", "deanary");
@@ -111,8 +108,7 @@ public partial class DeanaryContext : DbContext
                 .HasColumnName("model");
         });
 
-        modelBuilder.Entity<Request>(entity =>
-        {
+        modelBuilder.Entity<Request>(entity => {
             entity
                 .HasNoKey()
                 .ToTable("requests", "deanary");
@@ -132,8 +128,7 @@ public partial class DeanaryContext : DbContext
                 .HasConstraintName("requests_staff_id_fkey");
         });
 
-        modelBuilder.Entity<Staff>(entity =>
-        {
+        modelBuilder.Entity<Staff>(entity => {
             entity.HasKey(e => e.StaffId).HasName("staff_pkey");
 
             entity.ToTable("staff", "deanary");
@@ -152,8 +147,7 @@ public partial class DeanaryContext : DbContext
                 .HasColumnName("last_name");
         });
 
-        modelBuilder.Entity<TypeStatus>(entity =>
-        {
+        modelBuilder.Entity<TypeStatus>(entity => {
             entity.HasKey(e => e.TypeId).HasName("statuses_pkey");
 
             entity.ToTable("statuses", "deanary");
@@ -164,8 +158,7 @@ public partial class DeanaryContext : DbContext
                 .HasColumnName("status_type");
         });
 
-        modelBuilder.Entity<Status>(entity =>
-        {
+        modelBuilder.Entity<Status>(entity => {
             entity
                 .HasNoKey()
                 .ToTable("status", "deanary");

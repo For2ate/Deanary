@@ -3,8 +3,7 @@ using System.Collections.Generic;
 
 namespace DeanarySoft.DataLayer.DataBaseClasses;
 
-public partial class Contactphone
-{
+public partial class Contactphone {
     public int Contact { get; set; }
 
     public int StaffId { get; set; }

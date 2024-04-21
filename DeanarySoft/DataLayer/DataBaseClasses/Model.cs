@@ -3,8 +3,7 @@ using System.Collections.Generic;
 
 namespace DeanarySoft.DataLayer.DataBaseClasses;
 
-public partial class Model : IToStringValue
-{
+public partial class Model {
     public int ModelId { get; set; }
 
     public string Manufactor { get; set; } = null!;
@@ -17,7 +16,4 @@ public partial class Model : IToStringValue
 
     public virtual ICollection<Equipment> Equipment { get; set; } = new List<Equipment>();
 
-    public override string ToString() {
-        return $"{Manufactor}, {ModelName}, {EquipmentType}";
-    }
 }
