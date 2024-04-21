@@ -92,7 +92,7 @@
 
                     </StackPanel>
                     <StackPanel x:Name="StaffMenu"  Visibility="{Binding IsStaffSelected, Converter={StaticResource BooleanToVisibilityConverter}}">
-                        <Button x:Name="AddStaff" Content="Добавить сотрудника" Style="{StaticResource Buttons}"/>
+                        <Button x:Name="AddStaff" Content="Добавить сотрудника" Style="{StaticResource Buttons}" Command="{Binding AddNewStaff}"/>
                         <Button x:Name="EditStaff" Content="Редактировать информацию" Style="{StaticResource Buttons}"/>
                     </StackPanel>
                 </Grid>
