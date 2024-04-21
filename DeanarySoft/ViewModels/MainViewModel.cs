@@ -71,17 +71,26 @@ public class MainViewModel : INotifyPropertyChanged
     public ICommand ShowRequestHistoryCommand { get; }
     public ICommand ShowNewRequestsCommand { get; }
 
+    public ICommand AddNewStaff { get; }
 
     public MainViewModel() {
         ShowEquipmentCommand = new DelegateCommand(async () => await ShowData(DataType.Equipment));
         ShowStaffCommand = new DelegateCommand(async () => await ShowData(DataType.Staff));
         ShowRequestHistoryCommand = new DelegateCommand(async () => await ShowData(DataType.RequestHist));
         ShowNewRequestsCommand = new DelegateCommand(async () => await ShowData(DataType.NewRequests));
-        
+        AddNewStaff = new DelegateCommand(OpenNewStaffDialog);
         _context = Sourse.ConnectingDataBase();
         ShowData(DataType.RequestHist);
         
     }
+
+    private void OpenNewStaffDialog()
+    {
+        var dialogVM = new AddNewStaffViewModel();
+        var dialog = new AddNewStaffWindow { DataContext = dialogVM};
+        dialog.ShowDialog();
+    }
+
     // Загрузка данных в зависимости от dataType
     // Вместе с вызовом методов заполнения коллекций происходит изменение видимости определенных меню для работы с конкретным отображением
 
