@@ -3,8 +3,7 @@ using System.Collections.Generic;
 
 namespace DeanarySoft.DataLayer.DataBaseClasses;
 
-public partial class Status
-{
+public partial class Status {
     public int EquipmentId { get; set; }
 
     public int TypeId { get; set; }

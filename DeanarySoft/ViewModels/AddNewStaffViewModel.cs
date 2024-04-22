@@ -11,8 +11,9 @@ using DeanarySoft.View;
 
 namespace DeanarySoft.ViewModels;
 
-public class AddNewStaffViewModel: INotifyPropertyChanged
-{
+public class AddNewStaffViewModel : INotifyPropertyChanged {
+
+	public Staff Staff { get; private set; }
 	public ICommand AddStaff { get; }
 	public ObservableCollection<short> AccessLevels { get; } = new() { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
 	public ObservableCollection<Contactphone> Contacts { get; } = new ObservableCollection<Contactphone>();
@@ -58,6 +59,9 @@ public class AddNewStaffViewModel: INotifyPropertyChanged
 	{
 		Contacts.Remove(contact);
 	}
+	public AddNewStaffViewModel(Staff staff) : base() {
+		this.Staff = staff;
+	}
 
 	private bool _dialogRes = false;
 
@@ -99,13 +103,11 @@ public class AddNewStaffViewModel: INotifyPropertyChanged
 
 	public event PropertyChangedEventHandler? PropertyChanged;
 
-	protected virtual void OnPropertyChanged([CallerMemberName] string? propertyName = null)
-	{
+	protected virtual void OnPropertyChanged([CallerMemberName] string? propertyName = null) {
 		PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
 	}
 
-	protected bool SetField<T>(ref T field, T value, [CallerMemberName] string? propertyName = null)
-	{
+	protected bool SetField<T>(ref T field, T value, [CallerMemberName] string? propertyName = null) {
 		if (EqualityComparer<T>.Default.Equals(field, value)) return false;
 		field = value;
 		OnPropertyChanged(propertyName);

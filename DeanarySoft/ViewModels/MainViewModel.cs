@@ -1,15 +1,18 @@
 ﻿using System.Collections;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.IO;
 using System.Runtime.CompilerServices;
 using System.Windows.Data;
 using System.Windows.Input;
-using DeanarySoft.BuisnessLayer;
-using DeanarySoft.DataLayer;
-using DeanarySoft.View;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
+
+using DeanarySoft.BuisnessLayer;
+using DeanarySoft.DataLayer.Context;
+using DeanarySoft.DataLayer.DataBaseClasses;
+using DeanarySoft.View;
 
 namespace DeanarySoft.ViewModels;
 
@@ -23,41 +26,39 @@ public class MainViewModel : INotifyPropertyChanged
 
     public enum DataType { Equipment, Staff, RequestHist, NewRequests, UnSelected}
 
-    
-    
     public bool IsRequestHistSelected
     {
-        get => _isRequestHistSelected;
+        get => isRequestHistSelected;
         set
         {
-            _isRequestHistSelected = value;
+            isRequestHistSelected = value;
             OnPropertyChanged(nameof(IsRequestHistSelected));
         }
     }
     public bool IsNewRequestsSelected
     {
-        get => _isNewRequestsSelected;
+        get => isNewRequestsSelected;
         set
         {
-            _isNewRequestsSelected = value;
+            isNewRequestsSelected = value;
             OnPropertyChanged(nameof(IsNewRequestsSelected));
         }
     }
     public bool IsStaffSelected
     {
-        get => _isStaffSelected;
+        get => isStaffSelected;
         set
         {
-            _isStaffSelected = value;
+            isStaffSelected = value;
             OnPropertyChanged(nameof(IsStaffSelected));
         }
     }
     public bool IsEquipmentSelected
     {
-        get => _isEquipmentSelected;
+        get => isEquipmentSelected;
         set
         {
-            _isEquipmentSelected = value;
+            isEquipmentSelected = value;
             OnPropertyChanged(nameof(IsEquipmentSelected));
         }
     }
@@ -75,8 +76,7 @@ public class MainViewModel : INotifyPropertyChanged
 
     public ICommand AddNewStaff { get; }
 
-    public MainViewModel()
-    {
+    public MainViewModel() {
         ShowEquipmentCommand = new DelegateCommand(async () => await ShowData(DataType.Equipment));
         ShowStaffCommand = new DelegateCommand(async () => await ShowData(DataType.Staff));
         ShowRequestHistoryCommand = new DelegateCommand(async () => await ShowData(DataType.RequestHist));
@@ -89,76 +89,90 @@ public class MainViewModel : INotifyPropertyChanged
 
     private void OpenNewStaffDialog()
     {
-        var dialogVM = new AddNewStaffViewModel();
-        var dialog = new AddNewStaffWindow { DataContext = dialogVM};
+        var dialogVM = new AddNewStaffViewModel(new Staff());
+        var dialog = new AddNewStaffWindow{ DataContext = dialogVM};
+        var currentVM = dialog.DataContext as AddNewStaffViewModel;
         dialog.ShowDialog();
+        if (dialog.DialogResult == true) {
+            Trace.WriteLine(currentVM.Staff.ToString());
+        }
     }
 
     // Загрузка данных в зависимости от dataType
     // Вместе с вызовом методов заполнения коллекций происходит изменение видимости определенных меню для работы с конкретным отображением
-    // Возможно изменение кода в соответствии с SOLID
+
     private async Task ShowData(DataType dataType)
     {
         SelectedDataType = dataType;
         Items.Clear();
         SelectedItem = null;
-        
-        SetSelectedType(SelectedDataType);
-        switch (SelectedDataType)
-        {
-            case DataType.Equipment:
-                GetData(await LoadEquipmentAsync());
-                break;
-            case DataType.Staff:
-                GetData(await LoadStaffAsync());
-                break;
-            case DataType.RequestHist:
-                GetData(await LoadRequestHistAsync());
-                break;
-            case DataType.NewRequests:
-            {
-                IsNewRequestsSelected = true;
-                break;
-            }
-        }
-    }
-    
-    public void GetData(IEnumerable recivedData)
-    {
-        foreach (var item in recivedData)
-        {
-            Items.Add(item);
-        }
-    }
 
-    public void SetSelectedType(DataType dataType)
-    {
-        IsEquipmentSelected = false;
         IsStaffSelected = false;
+        IsEquipmentSelected = false;
         IsRequestHistSelected = false;
         IsNewRequestsSelected = false;
 
-        switch (dataType)
+        // !!!!! Важно !!!!!
+        // return необходим для корректной смены меню, до реализации методов
+        if (dataType == DataType.Equipment)
         {
-            case DataType.Equipment:
-                IsEquipmentSelected = true;
-                break;
-            case DataType.Staff:
-                IsStaffSelected = true;
-                break;
-            case DataType.RequestHist:
-                IsRequestHistSelected = true;
-                break;
-            case DataType.NewRequests:
-                IsNewRequestsSelected = true;
-                break;
+            IsEquipmentSelected = true;
+            var equipmentList = await LoadEquipmentAsync();
+            foreach (var equipment in equipmentList)
+            {
+                Items.Add(equipment);
+            }
+        }
+        else if (dataType == DataType.Staff)
+        {
+            IsStaffSelected = true;
+            var staffList = await LoadStaffAsync();
+            foreach (var staff in staffList)
+            {
+                Items.Add(staff);
+            }
+        }
+        else if (dataType == DataType.RequestHist)
+        {
+            IsRequestHistSelected = true;
+            var requestHistList = await LoadRequestHistAsync();
+            foreach (var request in requestHistList)
+            {
+                Items.Add(request);
+            }
+        }
+        else if (dataType == DataType.NewRequests)
+        {
+            IsNewRequestsSelected = true;
+            return;
+            var newRequestsList = await LoadNewRequestsAsync();
+            foreach (var request in newRequestsList)
+            {
+                Items.Add(request);
+            }
         }
     }
-   
+
+
+
+    // ... Реализация INotifyPropertyChanged ...
+    public event PropertyChangedEventHandler? PropertyChanged;
+
+    protected virtual void OnPropertyChanged([CallerMemberName] string? propertyName = null)
+    {
+        PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+    }
+
+    protected bool SetField<T>(ref T field, T value, [CallerMemberName] string? propertyName = null)
+    {
+        if (EqualityComparer<T>.Default.Equals(field, value)) return false;
+        field = value;
+        OnPropertyChanged(propertyName);
+        return true;
+    }
     // ... Методы для загрузки данных
 
-    private async Task<IEnumerable> LoadNewRequestsAsync()
-    {
+    private async Task<IEnumerable> LoadNewRequestsAsync() {
         throw new NotImplementedException();
     }
     private async Task<IEnumerable> LoadRequestHistAsync()
@@ -177,6 +191,7 @@ public class MainViewModel : INotifyPropertyChanged
 
         return new ObservableCollection<object>(history);
     }
+
     private async Task<IEnumerable> LoadStaffAsync()
     {
         var staff = Context.Staff
@@ -197,8 +212,7 @@ public class MainViewModel : INotifyPropertyChanged
     {
         var equipment = Context.Equipment
             .Include(e => e.Model)
-            .Select(e => new EquipmentViewModel
-            {
+            .Select(e => new EquipmentViewModel {
                 EquipmentId = e.EquipmentId,
                 ModelName = e.Model.ModelName,
                 EquipmentType = e.Model.EquipmentType,
@@ -209,22 +223,5 @@ public class MainViewModel : INotifyPropertyChanged
 
         return new ObservableCollection<object>(equipment);
     }
-    
-    
-    
-    // ... Реализация INotifyPropertyChanged ...
-    public event PropertyChangedEventHandler? PropertyChanged;
 
-    protected virtual void OnPropertyChanged([CallerMemberName] string? propertyName = null)
-    {
-        PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-    }
-
-    protected bool SetField<T>(ref T field, T value, [CallerMemberName] string? propertyName = null)
-    {
-        if (EqualityComparer<T>.Default.Equals(field, value)) return false;
-        field = value;
-        OnPropertyChanged(propertyName);
-        return true;
-    }
 }
