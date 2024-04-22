@@ -1,5 +1,7 @@
-﻿using System.ComponentModel;
+﻿using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using System.Windows.Documents;
 using System.Windows.Input;
 using DeanarySoft.BuisnessLayer;
 using DeanarySoft.DataLayer.DataBaseClasses;
@@ -10,7 +12,8 @@ namespace DeanarySoft.ViewModels;
 public class AddNewStaffViewModel: INotifyPropertyChanged
 {
 	public ICommand AddStaff { get; }
-	
+	public ObservableCollection<short> AccessLevels { get; } = new() { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
+	public ObservableCollection<Contactphone> Contacts { get; } = new ObservableCollection<Contactphone>();
 	private string firstName = null!;
 	public string FirstName {
 		get { return this.firstName; }
@@ -29,7 +32,7 @@ public class AddNewStaffViewModel: INotifyPropertyChanged
 	private short accessLevel;
 	public short AccessLevel {
 		get { return this.accessLevel; }
-		set { accessLevel = Convert.ToInt16(value); OnPropertyChanged("AccessLevel"); }
+		set { accessLevel = (short)value; OnPropertyChanged("AccessLevel"); }
 	}
 
 	private string? description;
@@ -37,12 +40,21 @@ public class AddNewStaffViewModel: INotifyPropertyChanged
 		get { return this.description; }
 		set { description = value; OnPropertyChanged("Description"); }
 	}
-
-	ICollection<Contactphone> contactphones = new List<Contactphone>();
-	public virtual ICollection<Contactphone> Contactphones {
-		get { return this.contactphones; }
-		set { contactphones = value; OnPropertyChanged("Contactphones"); }
+	public ICommand AddContactCommand { get; }
+	public ICommand RemoveContactCommand { get; }
+	
+	
+	private void AddContact()
+	{
+		Contacts.Add(new Contactphone());
+		
 	}
+
+	private void RemoveContact(Contactphone contact)
+	{
+		Contacts.Remove(contact);
+	}
+	
 	
 	
 	
@@ -52,22 +64,31 @@ public class AddNewStaffViewModel: INotifyPropertyChanged
 
 	public AddNewStaffViewModel()
 	{
+		AddContactCommand = new DelegateCommand(AddContact);
+		RemoveContactCommand = new DelegateCommand<Contactphone>(RemoveContact);
+
 		AddStaff = new DelegateCommand(() => AddingStaff());
 	}
+
+	
 
 	public void AddingStaff()
 	{
 		DialogResult = true;
-		var context = Sourse.ConnectingDataBase();
-		Staff st = new Staff();
-		st.FirstName = FirstName;
-		st.LastName = LastName;
-		st.Department = Department;
-		st.AccessLevel = AccessLevel;
-		st.Description = Description;
+		var context = MainViewModel.Context;
+		Staff st = new Staff
+		{
+			FirstName = FirstName,
+			LastName = LastName,
+			Department = Department,
+			AccessLevel = AccessLevel,
+			Description = Description,
+			Contactphones = Contacts
+		};
 		context.Staff.Add(st);
+		context.SaveChanges();
 	}
-
+	
 
 
 	public event PropertyChangedEventHandler? PropertyChanged;

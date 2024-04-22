@@ -19,7 +19,7 @@ public class MainViewModel : INotifyPropertyChanged
     private bool _isNewRequestsSelected;
     private bool _isStaffSelected;
     private bool _isEquipmentSelected;
-    private readonly DeanaryContext _context;
+    public static readonly DeanaryContext Context = Sourse.ConnectingDataBase();
 
     public enum DataType { Equipment, Staff, RequestHist, NewRequests, UnSelected}
 
@@ -82,7 +82,7 @@ public class MainViewModel : INotifyPropertyChanged
         ShowRequestHistoryCommand = new DelegateCommand(async () => await ShowData(DataType.RequestHist));
         ShowNewRequestsCommand = new DelegateCommand(async () => await ShowData(DataType.NewRequests));
         AddNewStaff = new DelegateCommand(OpenNewStaffDialog);
-        _context = Sourse.ConnectingDataBase();
+        
         ShowData(DataType.RequestHist);
         
     }
@@ -163,7 +163,7 @@ public class MainViewModel : INotifyPropertyChanged
     }
     private async Task<IEnumerable> LoadRequestHistAsync()
     {
-        var history = _context.Requests
+        var history = Context.Requests
             .Select(r => new RequestHistoryViewModel()
             {
                 EquipmentId = r.EquipmentId,
@@ -179,7 +179,7 @@ public class MainViewModel : INotifyPropertyChanged
     }
     private async Task<IEnumerable> LoadStaffAsync()
     {
-        var staff = _context.Staff
+        var staff = Context.Staff
             .Select(s => new StaffViewModel
             {
                 StaffId = s.StaffId,
@@ -195,7 +195,7 @@ public class MainViewModel : INotifyPropertyChanged
 
     private async Task<IEnumerable> LoadEquipmentAsync()
     {
-        var equipment = _context.Equipment
+        var equipment = Context.Equipment
             .Include(e => e.Model)
             .Select(e => new EquipmentViewModel
             {

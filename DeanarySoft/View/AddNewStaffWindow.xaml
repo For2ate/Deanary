@@ -65,26 +65,29 @@
                             <RowDefinition></RowDefinition>
                             <RowDefinition></RowDefinition>
                         </Grid.RowDefinitions>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition/>
-                            <ColumnDefinition/>
-                        </Grid.ColumnDefinitions>
-                        <TextBlock Grid.Row="0" Grid.ColumnSpan="2" Style="{StaticResource Margins}">Контакты: </TextBlock>
-                        <TextBox Grid.ColumnSpan="2" Grid.Row="1" Style="{StaticResource Margins}"/>
-                        <Button Grid.Row="2" Grid.ColumnSpan="2">+</Button>
-                        <TextBox Grid.ColumnSpan="2" Grid.Row="2" Visibility="Hidden" Style="{StaticResource Margins}"/>
-                        <Button Grid.Row="3" Visibility="Hidden" Grid.ColumnSpan="2">+</Button>
-                        <TextBox Grid.ColumnSpan="2" Grid.Row="3" Visibility="Hidden" Style="{StaticResource Margins}"/>
+                        <ItemsControl  Grid.Row="1" ItemsSource="{Binding Contacts}">
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition/>
+                                            <ColumnDefinition Width="Auto"/>
+                                        </Grid.ColumnDefinitions>
+                                        <StackPanel Orientation="Horizontal">
+                                            <TextBlock Text="+375" />
+                                            <TextBox Text="{Binding Contact, UpdateSourceTrigger=PropertyChanged}" Width="100" MaxLength="9"/>
+                                        </StackPanel><Button Grid.Column="1" Command="{Binding DataContext.RemoveContactCommand, RelativeSource={RelativeSource AncestorType=ItemsControl}}" CommandParameter="{Binding}">
+                                            -
+                                        </Button>
+                                    </Grid>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                        <Button Command="{Binding AddContactCommand}">+</Button>
                     </Grid>
                     </StackPanel>
                     <TextBlock Grid.Row="0" Style="{StaticResource Margins}" >Уровень доступа: </TextBlock>
-                    <ComboBox SelectedIndex="0" Grid.Column="1" Grid.Row="0" Height="20"  VerticalAlignment="Top" Style="{StaticResource Margins}" SelectedItem="{Binding  AccessLevel}"> 
-                        <ComboBoxItem>1</ComboBoxItem>
-                        <ComboBoxItem>2</ComboBoxItem>
-                        <ComboBoxItem>3</ComboBoxItem>
-                        <ComboBoxItem>4</ComboBoxItem>
-                        <ComboBoxItem>5</ComboBoxItem>
-                    </ComboBox>
+                    <ComboBox SelectedIndex="0" ItemsSource="{Binding AccessLevels}" Grid.Column="1" Grid.Row="0" Height="20"  VerticalAlignment="Top" Style="{StaticResource Margins}" SelectedItem="{Binding  AccessLevel}"/>
                     <TextBlock Grid.Row="1" Grid.Column="0" Style="{StaticResource Margins}">Описание:</TextBlock>
                     <TextBox Grid.ColumnSpan="3" Grid.Column="0" Grid.Row="2" Text="{Binding  Description}"></TextBox>
                 </Grid>
