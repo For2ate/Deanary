@@ -18,11 +18,11 @@ namespace DeanarySoft.ViewModels;
 
 public class MainViewModel : INotifyPropertyChanged
 {
-    private bool isRequestHistSelected = true;
-    private bool isNewRequestsSelected;
-    private bool isStaffSelected;
-    private bool isEquipmentSelected;
-    private readonly DeanaryContext _context = new DeanaryContext();
+    private bool _isRequestHistSelected = true;
+    private bool _isNewRequestsSelected;
+    private bool _isStaffSelected;
+    private bool _isEquipmentSelected;
+    public static readonly DeanaryContext Context = Sourse.ConnectingDataBase();
 
     public enum DataType { Equipment, Staff, RequestHist, NewRequests, UnSelected}
 
@@ -82,7 +82,7 @@ public class MainViewModel : INotifyPropertyChanged
         ShowRequestHistoryCommand = new DelegateCommand(async () => await ShowData(DataType.RequestHist));
         ShowNewRequestsCommand = new DelegateCommand(async () => await ShowData(DataType.NewRequests));
         AddNewStaff = new DelegateCommand(OpenNewStaffDialog);
-        _context = Sourse.ConnectingDataBase();
+        
         ShowData(DataType.RequestHist);
         
     }
@@ -175,9 +175,11 @@ public class MainViewModel : INotifyPropertyChanged
     private async Task<IEnumerable> LoadNewRequestsAsync() {
         throw new NotImplementedException();
     }
-    private async Task<IEnumerable> LoadRequestHistAsync() {
-        var history = _context.Requests
-            .Select(r => new RequestHistoryViewModel() {
+    private async Task<IEnumerable> LoadRequestHistAsync()
+    {
+        var history = Context.Requests
+            .Select(r => new RequestHistoryViewModel()
+            {
                 EquipmentId = r.EquipmentId,
                 ModelInfo = r.Equipment.Model.ToString(),
                 StaffId = r.StaffId,
@@ -189,9 +191,12 @@ public class MainViewModel : INotifyPropertyChanged
 
         return new ObservableCollection<object>(history);
     }
-    private async Task<IEnumerable> LoadStaffAsync() {
-        var staff = _context.Staff
-            .Select(s => new StaffViewModel {
+
+    private async Task<IEnumerable> LoadStaffAsync()
+    {
+        var staff = Context.Staff
+            .Select(s => new StaffViewModel
+            {
                 StaffId = s.StaffId,
                 Name = s.LastName + " " + s.FirstName,
                 Department = s.Department,
@@ -203,8 +208,9 @@ public class MainViewModel : INotifyPropertyChanged
 
     }
 
-    private async Task<IEnumerable> LoadEquipmentAsync() {
-        var equipment = _context.Equipment
+    private async Task<IEnumerable> LoadEquipmentAsync()
+    {
+        var equipment = Context.Equipment
             .Include(e => e.Model)
             .Select(e => new EquipmentViewModel {
                 EquipmentId = e.EquipmentId,
