@@ -20,7 +20,7 @@ namespace DeanarySoft.BuisnessLayer
 
         [STAThread()]
         public static void Main() {
-            context = ConnectingDataBase();
+            //context = ConnectingDataBase();
             App mainApplication = new App();
             mainApplication.Run(mainWindow);
         }

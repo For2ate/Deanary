@@ -1,11 +1,12 @@
-﻿using System;
+﻿using DeanarySoft.DataLayer.Interfaces;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 
 namespace DeanarySoft.DataLayer.DataBaseClasses;
 
-public partial class Staff : INotifyPropertyChanged {
+public partial class Staff : INotifyPropertyChanged, IToStringValue {
     public int StaffId { get; set; }
     private string firstName = null!;
     public string FirstName {
@@ -38,6 +39,10 @@ public partial class Staff : INotifyPropertyChanged {
     public virtual ICollection<Contactphone> Contactphones {
         get { return this.contactphones; }
         set { contactphones = value; OnPropertyChanged("Contactphones"); }
+    }
+
+    public override string ToString() {
+        return $"{FirstName} {LastName}, кафедра: {Department}, уровень доступа: {AccessLevel}, краткие сведения: {Description}";
     }
 
     public event PropertyChangedEventHandler? PropertyChanged;

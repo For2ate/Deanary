@@ -1,15 +1,18 @@
 ﻿using System.Collections;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.IO;
 using System.Runtime.CompilerServices;
 using System.Windows.Data;
 using System.Windows.Input;
-using DeanarySoft.BuisnessLayer;
-using DeanarySoft.DataLayer.Context;
-using DeanarySoft.View;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
+
+using DeanarySoft.BuisnessLayer;
+using DeanarySoft.DataLayer.Context;
+using DeanarySoft.DataLayer.DataBaseClasses;
+using DeanarySoft.View;
 
 namespace DeanarySoft.ViewModels;
 
@@ -86,9 +89,13 @@ public class MainViewModel : INotifyPropertyChanged
 
     private void OpenNewStaffDialog()
     {
-        var dialogVM = new AddNewStaffViewModel();
-        var dialog = new AddNewStaffWindow { DataContext = dialogVM};
+        var dialogVM = new AddNewStaffViewModel(new Staff());
+        var dialog = new AddNewStaffWindow{ DataContext = dialogVM};
+        var currentVM = dialog.DataContext as AddNewStaffViewModel;
         dialog.ShowDialog();
+        if (dialog.DialogResult == true) {
+            Trace.WriteLine(currentVM.Staff.ToString());
+        }
     }
 
     // Загрузка данных в зависимости от dataType
