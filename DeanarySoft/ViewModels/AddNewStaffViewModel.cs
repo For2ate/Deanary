@@ -1,10 +1,12 @@
 ﻿using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using System.Windows;
 using System.Windows.Documents;
 using System.Windows.Input;
 using DeanarySoft.BuisnessLayer;
 using DeanarySoft.DataLayer.DataBaseClasses;
+using DeanarySoft.Services;
 using DeanarySoft.View;
 
 namespace DeanarySoft.ViewModels;
@@ -14,6 +16,8 @@ public class AddNewStaffViewModel: INotifyPropertyChanged
 	public ICommand AddStaff { get; }
 	public ObservableCollection<short> AccessLevels { get; } = new() { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
 	public ObservableCollection<Contactphone> Contacts { get; } = new ObservableCollection<Contactphone>();
+	private IStaffService _staffService;
+	
 	private string firstName = null!;
 	public string FirstName {
 		get { return this.firstName; }
@@ -54,29 +58,33 @@ public class AddNewStaffViewModel: INotifyPropertyChanged
 	{
 		Contacts.Remove(contact);
 	}
-	
-	
-	
-	
-	
-	
-	public bool? DialogResult { get; set; }
 
-	public AddNewStaffViewModel()
+	private bool _dialogRes = false;
+
+	public bool DialogRes
 	{
+		get => _dialogRes;
+		set { _dialogRes = value; OnPropertyChanged(); }
+	}
+
+
+	public AddNewStaffViewModel(IStaffService staffService)
+	{
+		_staffService = staffService;
 		AddContactCommand = new DelegateCommand(AddContact);
 		RemoveContactCommand = new DelegateCommand<Contactphone>(RemoveContact);
 
 		AddStaff = new DelegateCommand(() => AddingStaff());
 	}
 
-	
+	private Staff st;
+	public Staff St => st;
+
 
 	public void AddingStaff()
 	{
-		DialogResult = true;
-		var context = MainViewModel.Context;
-		Staff st = new Staff
+		DialogRes = true; 
+		st = new Staff
 		{
 			FirstName = FirstName,
 			LastName = LastName,
@@ -85,11 +93,9 @@ public class AddNewStaffViewModel: INotifyPropertyChanged
 			Description = Description,
 			Contactphones = Contacts
 		};
-		context.Staff.Add(st);
-		context.SaveChanges();
+		_staffService.AddStaff(st);
 	}
 	
-
 
 	public event PropertyChangedEventHandler? PropertyChanged;
 

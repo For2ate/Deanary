@@ -4,6 +4,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:local="clr-namespace:DeanarySoft.View"
+        xmlns:i="clr-namespace:DeanarySoft.Behaviors"
         mc:Ignorable="d"
         Title="AddNewStaff" Height="500" Width="450">
     <Window.Resources>
@@ -105,4 +106,7 @@
             <Button Grid.Column="3" IsDefault="True" IsCancel="True">Отмена</Button>
         </Grid>
     </Grid>
+    <i:CloseWindowBehavior.IsClosed>
+        <Binding Path="DialogRes"/>
+    </i:CloseWindowBehavior.IsClosed>
 </Window>
