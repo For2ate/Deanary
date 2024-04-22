@@ -7,6 +7,7 @@
         mc:Ignorable="d"
         Title="AddNewStaff" Height="500" Width="450">
     <Window.Resources>
+        
         <Style x:Key="Margins" >
             <Setter Property="TextBlock.Margin" Value="0 2 0 0"/>
             <Setter Property="TextBox.Margin" Value="0 2 0 0"/>
@@ -36,12 +37,12 @@
                         <ColumnDefinition/>
                         <ColumnDefinition/>
                     </Grid.ColumnDefinitions>
-                    <TextBlock Grid.Row="0" Style="{StaticResource Margins}">Имя: </TextBlock>
-                    <TextBox Grid.Column="1" Grid.Row="0" Style="{StaticResource Margins}"/>
-                    <TextBlock Grid.Row="1" Grid.Column="0" Style="{StaticResource Margins}">Фамилия: </TextBlock>
-                    <TextBox Grid.Column="1" Grid.Row="1" Style="{StaticResource Margins}"/>
-                    <TextBlock Grid.Row="2" Grid.Column="0" Style="{StaticResource Margins}">Кафедра: </TextBlock>
-                    <TextBox Grid.Column="1" Grid.Row="2"  Style="{StaticResource Margins}"/>
+                    <TextBlock Grid.Row="0" Style="{StaticResource Margins}" >Имя: </TextBlock>
+                    <TextBox Grid.Column="1" Grid.Row="0" Style="{StaticResource Margins}" Text="{Binding  FirstName}"/>
+                    <TextBlock Grid.Row="1" Grid.Column="0" Style="{StaticResource Margins}" >Фамилия: </TextBlock>
+                    <TextBox Grid.Column="1" Grid.Row="1" Style="{StaticResource Margins}" Text="{Binding  LastName}"/>
+                    <TextBlock Grid.Row="2" Grid.Column="0" Style="{StaticResource Margins}" >Кафедра: </TextBlock>
+                    <TextBox Grid.Column="1" Grid.Row="2"  Style="{StaticResource Margins}" Text="{Binding  Department}"/>
                 </Grid>
             </GroupBox>
             <GroupBox Header="Дополнительно" x:Name="Unnes">
@@ -76,8 +77,8 @@
                         <TextBox Grid.ColumnSpan="2" Grid.Row="3" Visibility="Hidden" Style="{StaticResource Margins}"/>
                     </Grid>
                     </StackPanel>
-                    <TextBlock Grid.Row="0" Style="{StaticResource Margins}">Уровень доступа: </TextBlock>
-                    <ComboBox SelectedIndex="0" Grid.Column="1" Grid.Row="0" Height="20"  VerticalAlignment="Top" Style="{StaticResource Margins}"> 
+                    <TextBlock Grid.Row="0" Style="{StaticResource Margins}" >Уровень доступа: </TextBlock>
+                    <ComboBox SelectedIndex="0" Grid.Column="1" Grid.Row="0" Height="20"  VerticalAlignment="Top" Style="{StaticResource Margins}" SelectedItem="{Binding  AccessLevel}"> 
                         <ComboBoxItem>1</ComboBoxItem>
                         <ComboBoxItem>2</ComboBoxItem>
                         <ComboBoxItem>3</ComboBoxItem>
@@ -85,7 +86,7 @@
                         <ComboBoxItem>5</ComboBoxItem>
                     </ComboBox>
                     <TextBlock Grid.Row="1" Grid.Column="0" Style="{StaticResource Margins}">Описание:</TextBlock>
-                    <RichTextBox Grid.ColumnSpan="3" Grid.Column="0" Grid.Row="2"></RichTextBox>
+                    <TextBox Grid.ColumnSpan="3" Grid.Column="0" Grid.Row="2" Text="{Binding  Description}"></TextBox>
                 </Grid>
             </GroupBox>
             </StackPanel>
