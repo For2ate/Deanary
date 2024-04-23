@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using DeanarySoft.DataLayer.Interfaces;
 
 namespace DeanarySoft.DataLayer.DataBaseClasses;
 
-public partial class Model : IToStringValue
-{
+public partial class Model : IToStringValue {
     public int ModelId { get; set; }
 
     public string Manufactor { get; set; } = null!;
@@ -16,8 +16,8 @@ public partial class Model : IToStringValue
     public short? AccessLevel { get; set; }
 
     public virtual ICollection<Equipment> Equipment { get; set; } = new List<Equipment>();
-
     public override string ToString() {
         return $"{Manufactor}, {ModelName}, {EquipmentType}";
     }
+
 }

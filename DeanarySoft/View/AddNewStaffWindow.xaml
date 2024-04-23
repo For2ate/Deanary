@@ -26,7 +26,7 @@
             <RowDefinition Height="0.1*"/>
             <RowDefinition Height="0.1*"/>
         </Grid.RowDefinitions>
-        <StackPanel Grid.Row="1" Grid.Column="1">
+        <StackPanel DataContext="{Binding Staff}" Grid.Row="1" Grid.Column="1">
             <GroupBox Header="Основная информация">
                 <Grid>
                     <Grid.RowDefinitions>
@@ -38,12 +38,12 @@
                         <ColumnDefinition/>
                         <ColumnDefinition/>
                     </Grid.ColumnDefinitions>
-                    <TextBlock Grid.Row="0" Style="{StaticResource Margins}" >Имя: </TextBlock>
-                    <TextBox Grid.Column="1" Grid.Row="0" Style="{StaticResource Margins}" Text="{Binding  FirstName}"/>
-                    <TextBlock Grid.Row="1" Grid.Column="0" Style="{StaticResource Margins}" >Фамилия: </TextBlock>
-                    <TextBox Grid.Column="1" Grid.Row="1" Style="{StaticResource Margins}" Text="{Binding  LastName}"/>
-                    <TextBlock Grid.Row="2" Grid.Column="0" Style="{StaticResource Margins}" >Кафедра: </TextBlock>
-                    <TextBox Grid.Column="1" Grid.Row="2"  Style="{StaticResource Margins}" Text="{Binding  Department}"/>
+                    <TextBlock Grid.Row="0" Style="{StaticResource Margins}">Имя: </TextBlock>
+                    <TextBox Text="{Binding FirstName}" Grid.Column="1" Grid.Row="0" Style="{StaticResource Margins}"/>
+                    <TextBlock Grid.Row="1" Grid.Column="0" Style="{StaticResource Margins}">Фамилия: </TextBlock>
+                    <TextBox Text="{Binding LastName}" Grid.Column="1" Grid.Row="1" Style="{StaticResource Margins}" />
+                    <TextBlock Grid.Row="2" Grid.Column="0" Style="{StaticResource Margins}">Кафедра: </TextBlock>
+                    <TextBox Text="{Binding Department}" Grid.Column="1" Grid.Row="2"  Style="{StaticResource Margins}"/>
                 </Grid>
             </GroupBox>
             <GroupBox Header="Дополнительно" x:Name="Unnes">
@@ -102,7 +102,7 @@
                 <ColumnDefinition></ColumnDefinition>
                 <ColumnDefinition></ColumnDefinition>
             </Grid.ColumnDefinitions>
-            <Button Grid.Column="2" Command="{Binding AddStaff}">Добавить</Button>
+            <Button Grid.Column="2" Command="{Binding AddStaff}" Click="Button_Click">Добавить</Button>
             <Button Grid.Column="3" IsDefault="True" IsCancel="True">Отмена</Button>
         </Grid>
     </Grid>

@@ -3,8 +3,7 @@ using System.Collections.Generic;
 
 namespace DeanarySoft.DataLayer.DataBaseClasses;
 
-public partial class Equipment : IToStringValue
-{
+public partial class Equipment {
     public int EquipmentId { get; set; }
 
     public int ModelId { get; set; }
