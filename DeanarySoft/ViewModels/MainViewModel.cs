@@ -1,15 +1,15 @@
 ﻿using System.Collections;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.IO;
 using System.Runtime.CompilerServices;
-using System.Windows.Data;
+using System.Windows;
 using System.Windows.Input;
 using DeanarySoft.BuisnessLayer;
 using DeanarySoft.DataLayer;
+using DeanarySoft.DataLayer.DataBaseClasses;
+using DeanarySoft.Services;
 using DeanarySoft.View;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
 
 namespace DeanarySoft.ViewModels;
 
@@ -20,7 +20,7 @@ public class MainViewModel : INotifyPropertyChanged
     private bool _isStaffSelected;
     private bool _isEquipmentSelected;
     public static readonly DeanaryContext Context = Sourse.ConnectingDataBase();
-
+    private readonly IStaffService _staffService = new StaffService(Context);
     public enum DataType { Equipment, Staff, RequestHist, NewRequests, UnSelected}
 
     
@@ -31,7 +31,7 @@ public class MainViewModel : INotifyPropertyChanged
         set
         {
             _isRequestHistSelected = value;
-            OnPropertyChanged(nameof(IsRequestHistSelected));
+            OnPropertyChanged();
         }
     }
     public bool IsNewRequestsSelected
@@ -40,7 +40,7 @@ public class MainViewModel : INotifyPropertyChanged
         set
         {
             _isNewRequestsSelected = value;
-            OnPropertyChanged(nameof(IsNewRequestsSelected));
+            OnPropertyChanged();
         }
     }
     public bool IsStaffSelected
@@ -49,7 +49,7 @@ public class MainViewModel : INotifyPropertyChanged
         set
         {
             _isStaffSelected = value;
-            OnPropertyChanged(nameof(IsStaffSelected));
+            OnPropertyChanged();
         }
     }
     public bool IsEquipmentSelected
@@ -58,7 +58,7 @@ public class MainViewModel : INotifyPropertyChanged
         set
         {
             _isEquipmentSelected = value;
-            OnPropertyChanged(nameof(IsEquipmentSelected));
+            OnPropertyChanged();
         }
     }
 
@@ -74,6 +74,7 @@ public class MainViewModel : INotifyPropertyChanged
     public ICommand ShowNewRequestsCommand { get; }
 
     public ICommand AddNewStaff { get; }
+    public ICommand DeleteSelectedStaff { get; }
 
     public MainViewModel()
     {
@@ -82,16 +83,45 @@ public class MainViewModel : INotifyPropertyChanged
         ShowRequestHistoryCommand = new DelegateCommand(async () => await ShowData(DataType.RequestHist));
         ShowNewRequestsCommand = new DelegateCommand(async () => await ShowData(DataType.NewRequests));
         AddNewStaff = new DelegateCommand(OpenNewStaffDialog);
+        DeleteSelectedStaff = new DelegateCommand(DeleteStaff);
         
         ShowData(DataType.RequestHist);
-        
     }
 
+    private void DeleteStaff()
+    {
+        if (SelectedItem is StaffViewModel staff)
+        {
+            MessageBoxResult mbr = MessageBox.Show("Вы уверены, что хотите удалить этого сотрудника?", "Удаление сотрудника", MessageBoxButton.YesNo);
+            if (mbr is MessageBoxResult.Yes)
+            {
+                Items.Remove(staff);
+                _staffService.DeleteStaff(staff.StaffId);
+            }
+        }else {
+            MessageBox.Show("Ни один сотрудник не выбран.", "Выбор не сделан", MessageBoxButton.OK);
+        }
+        
+    }
+    
     private void OpenNewStaffDialog()
     {
-        var dialogVM = new AddNewStaffViewModel();
+        var dialogVM = new AddNewStaffViewModel(_staffService);
         var dialog = new AddNewStaffWindow { DataContext = dialogVM};
         dialog.ShowDialog();
+        if (dialogVM.DialogRes)
+        {
+            Staff st = dialogVM.St;
+            StaffViewModel staff = new StaffViewModel
+            {
+                Name = st.FirstName + " " + st.LastName,
+                AccessLevel = st.AccessLevel,
+                Department = st.Department,
+                StaffId = st.StaffId
+            };
+            
+            Items.Add(staff);
+        }
     }
 
     // Загрузка данных в зависимости от dataType
@@ -164,7 +194,7 @@ public class MainViewModel : INotifyPropertyChanged
     private async Task<IEnumerable> LoadRequestHistAsync()
     {
         var history = Context.Requests
-            .Select(r => new RequestHistoryViewModel()
+            .Select(r => new RequestHistoryViewModel
             {
                 EquipmentId = r.EquipmentId,
                 ModelInfo = r.Equipment.Model.ToString(),

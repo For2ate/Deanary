@@ -94,12 +94,13 @@
                     <StackPanel x:Name="StaffMenu"  Visibility="{Binding IsStaffSelected, Converter={StaticResource BooleanToVisibilityConverter}}">
                         <Button x:Name="AddStaff" Content="Добавить сотрудника" Style="{StaticResource Buttons}" Command="{Binding AddNewStaff}"/>
                         <Button x:Name="EditStaff" Content="Редактировать информацию" Style="{StaticResource Buttons}"/>
+                        <Button x:Name="DeleteStaff" Content="Удалить сотрудника" Style="{StaticResource Buttons}" Command="{Binding DeleteSelectedStaff}"/>
                     </StackPanel>
                 </Grid>
             </GroupBox>
         </Grid>
         <ListView x:Name="EquipView" Grid.Row="1" Grid.Column="2" Margin="10 0 10 0" ItemsSource="{Binding Items}"
-                  Visibility="{Binding IsEquipmentSelected, Converter={StaticResource BooleanToVisibilityConverter}}">
+                  SelectedItem="{Binding SelectedItem}" Visibility="{Binding IsEquipmentSelected, Converter={StaticResource BooleanToVisibilityConverter}}">
             <ListView.View>
                 <GridView>
                     <GridViewColumn DisplayMemberBinding="{Binding EquipmentId}" Width="25">ID</GridViewColumn>
@@ -111,7 +112,7 @@
             </ListView.View>
         </ListView>
         <ListView x:Name="StaffView" Grid.Row="1" Grid.Column="2" Margin="10 0 10 0" ItemsSource="{Binding Items}"
-                  Visibility="{Binding IsStaffSelected, Converter={StaticResource BooleanToVisibilityConverter}}">
+                  SelectedItem="{Binding SelectedItem}" Visibility="{Binding IsStaffSelected, Converter={StaticResource BooleanToVisibilityConverter}}">
             <ListView.View>
                 <GridView>
                     <GridViewColumn DisplayMemberBinding="{Binding StaffId}" Width="25">ID</GridViewColumn>
@@ -122,7 +123,7 @@
             </ListView.View>
         </ListView>
         <ListView x:Name="RequestHistView" Grid.Row="1" Grid.Column="2" Margin="10 0 10 0" ItemsSource="{Binding Items}"
-                  Visibility="{Binding IsRequestHistSelected, Converter={StaticResource BooleanToVisibilityConverter}}">
+                  SelectedItem="{Binding SelectedItem}" Visibility="{Binding IsRequestHistSelected, Converter={StaticResource BooleanToVisibilityConverter}}">
             <ListView.View>
                 <GridView>
                     <GridViewColumn DisplayMemberBinding="{Binding EquipmentId}" >ID обор</GridViewColumn>
@@ -135,7 +136,7 @@
             </ListView.View>
         </ListView>
         <ListView x:Name="NewRequestsView" Grid.Row="1" Grid.Column="2" Margin="10 0 10 0" ItemsSource="{Binding NewRequests}"
-                  Visibility="{Binding IsNewRequestsSelected, Converter={StaticResource BooleanToVisibilityConverter}}">
+                  SelectedItem="{Binding SelectedItem}" Visibility="{Binding IsNewRequestsSelected, Converter={StaticResource BooleanToVisibilityConverter}}">
         </ListView>
         <Grid Row="1" Column="3" Background="Linen">
             <Grid.RowDefinitions>
