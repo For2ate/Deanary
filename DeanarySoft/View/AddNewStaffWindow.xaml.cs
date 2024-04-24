@@ -11,7 +11,4 @@ public partial class AddNewStaffWindow : Window {
 		InitializeComponent();
 	}
 
-    private void Button_Click(object sender, RoutedEventArgs e) {
-		DialogResult = true;
-    }
 }

@@ -102,7 +102,7 @@
                 <ColumnDefinition></ColumnDefinition>
                 <ColumnDefinition></ColumnDefinition>
             </Grid.ColumnDefinitions>
-            <Button Grid.Column="2" Command="{Binding AddStaff}" Click="Button_Click">Добавить</Button>
+            <Button Grid.Column="2" Command="{Binding AddStaff}" >Добавить</Button>
             <Button Grid.Column="3" IsDefault="True" IsCancel="True">Отмена</Button>
         </Grid>
     </Grid>
