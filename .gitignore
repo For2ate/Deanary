@@ -1,0 +1,9 @@
+/DeanarySoft/appsettings.json
+.vs/
+bin/
+obj/
+.idea/
+DeanarySoft/.vs/
+DeanarySoft/bin/
+DeanarySoft/obj/
+DeanarySoft/.idea/
